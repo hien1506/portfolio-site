@@ -1,9 +1,29 @@
 @import "@fontsource/ibm-plex-mono";
 
+@theme {
+  --font-mono: "IBM Plex Mono", monospace;
+  --color-primary: #202d85;
+  --color-text: #0f0e0e;
+  --color-background: #ffffff;
+}
+
 html,
 body {
   margin: 0;
-  width: 100%;
-  height: 100%;
-  font-family: "IBM Plex Mono", monospace;
+  width: 100dvw;
+  height: 100dvh;
+  font-family: var(--font-mono);
+  color: var(--color-text);
+  background-color: var(--color-background);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
