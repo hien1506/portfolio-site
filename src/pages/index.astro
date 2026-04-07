@@ -1,8 +1,20 @@
 ---
+import { getCollection } from "astro:content";
 import Layout from "../layouts/Layout.astro";
 import ProjectFilter from "../components/ProjectFilter.astro";
 import ProjectGrid from "../components/ProjectGrid.astro";
-import { projects } from "../data/projects";
+
+const allProjects = await getCollection("projects", ({ data }) => !data.draft);
+
+const projects = allProjects
+  .sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime())
+  .map((entry) => ({
+    title: entry.data.title,
+    description: entry.data.description,
+    image: entry.data.image ?? "",
+    link: entry.data.externalUrl ?? `/projects/${entry.id}`,
+    category: entry.data.category,
+  }));
 ---
 
 <Layout>

@@ -1,19 +1,20 @@
 ---
-import type { Category } from "../data/projects";
-
 interface Props {
   title: string;
   description: string;
   image: string;
   link: string;
-  category: Category;
+  category: string;
 }
 
 const { title, description, image, link, category } = Astro.props;
 ---
 
 <article data-category={category}>
-  <a href={link} class="group block no-underline rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary">
+  <a
+    href={link}
+    class="group block no-underline rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+  >
     <div class="overflow-hidden rounded-sm bg-neutral-200">
       {
         image ? (
@@ -24,7 +25,7 @@ const { title, description, image, link, category } = Astro.props;
             loading="lazy"
           />
         ) : (
-          <div class="aspect-[4/3]" />
+          <div class="aspect-4/3" />
         )
       }
     </div>

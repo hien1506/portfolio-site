@@ -1,9 +1,16 @@
 ---
 import ProjectCard from "./ProjectCard.astro";
-import type { Project } from "../data/projects";
+
+interface ProjectEntry {
+  title: string;
+  description: string;
+  image: string;
+  link: string;
+  category: string;
+}
 
 interface Props {
-  projects: Project[];
+  projects: ProjectEntry[];
 }
 
 const { projects } = Astro.props;

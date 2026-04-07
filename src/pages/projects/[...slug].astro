@@ -1,0 +1,39 @@
+---
+import { getCollection, render } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects", ({ data }) => {
+    return !data.draft && !data.externalUrl;
+  });
+
+  return projects.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<Layout>
+  <article class="mx-auto max-w-2xl px-4 py-16">
+    <a
+      href="/"
+      class="mb-8 inline-block text-sm underline underline-offset-3 transition-colors duration-150 ease-out hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+    >
+      &larr; Back
+    </a>
+    <h1 class="text-2xl font-semibold leading-tight text-balance">
+      {entry.data.title}
+    </h1>
+    <p class="mt-2 text-sm text-neutral-600">
+      {entry.data.description}
+    </p>
+    <hr class="my-8 border-neutral-200" />
+    <div class="prose prose-sm">
+      <Content />
+    </div>
+  </article>
+</Layout>
