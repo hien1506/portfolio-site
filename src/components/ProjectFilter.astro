@@ -16,12 +16,12 @@ const filters: FilterOption[] = [
 
 <nav aria-label="Project filters" class="mb-6">
   <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
-    <span class="text-sm font-semibold uppercase tracking-wide">Filters:</span>
+    <span class="text-base font-semibold uppercase tracking-wide">Filters:</span>
     {
       filters.map((filter) => (
         <button
           type="button"
-          class="filter-btn text-sm uppercase tracking-wide transition-colors duration-150 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+          class="filter-btn text-base uppercase tracking-wide transition-colors duration-150 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
           data-filter={filter.value}
           aria-pressed={filter.value === "all" ? "true" : "false"}
         >
