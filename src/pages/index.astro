@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import Layout from "../layouts/Layout.astro";
+import SketchpadHero from "../components/SketchpadHero.astro";
 import ProjectFilter from "../components/ProjectFilter.astro";
 import ProjectGrid from "../components/ProjectGrid.astro";
 
@@ -18,11 +19,8 @@ const projects = allProjects
 ---
 
 <Layout>
-  <section class="px-4 py-24">
-    <h1 class="max-w-md text-xl font-light leading-relaxed text-pretty">
-      I like experimenting and building friendly and safe web experiences
-    </h1>
-  </section>
+  <SketchpadHero />
+
   <div class="px-4 pb-16">
     <ProjectFilter />
     <ProjectGrid projects={projects} />

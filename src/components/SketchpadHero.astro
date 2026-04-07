@@ -1,0 +1,478 @@
+---
+
+---
+
+<section id="sketchpad-hero">
+  <div id="notebook">
+    <div id="sketch-container"></div>
+    <div id="notebook-content">
+      <h1>
+        I like experimenting and building friendly and safe web experiences
+      </h1>
+    </div>
+    <div id="pencil-ui">
+      <button
+        id="pencil-btn"
+        type="button"
+        aria-pressed="false"
+        title="Pick up pencil"
+      >
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path>
+          <path d="m15 5 4 4"></path>
+        </svg>
+        <span>sketch</span>
+      </button>
+      <button
+        id="eraser-btn"
+        type="button"
+        class="tool-btn hidden"
+        title="Eraser"
+      >
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path
+            d="m7 21-4.3-4.3c-1-1-1-2.5 0-3.4l9.6-9.6c1-1 2.5-1 3.4 0l5.6 5.6c1 1 1 2.5 0 3.4L13 21"
+          ></path>
+          <path d="M22 21H7"></path>
+          <path d="m5 11 9 9"></path>
+        </svg>
+      </button>
+      <button
+        id="clear-btn"
+        type="button"
+        class="tool-btn hidden"
+        title="Clear all"
+      >
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M3 6h18"></path>
+          <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+          <path d="m19 6-.7 14a2 2 0 0 1-2 2H7.7a2 2 0 0 1-2-2L5 6"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<style>
+  #sketchpad-hero {
+    padding: 0 1rem 2rem;
+  }
+
+  #notebook {
+    position: relative;
+    width: 100%;
+    min-height: 70vh;
+    border-radius: 0.75rem;
+    overflow: hidden;
+
+    /* Grid paper background */
+    background-color: #faf8f5;
+    background-image:
+      linear-gradient(rgba(32, 45, 133, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(32, 45, 133, 0.06) 1px, transparent 1px);
+    background-size: 28px 28px;
+
+    border: 1px solid rgba(32, 45, 133, 0.1);
+  }
+
+  #sketch-container {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  #sketch-container :global(canvas) {
+    display: block;
+  }
+
+  #notebook-content {
+    position: relative;
+    z-index: 2;
+    padding: 3rem 2rem;
+    pointer-events: none;
+  }
+
+  .intro {
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: rgba(32, 45, 133, 0.5);
+    margin: 0 0 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  #notebook-content h1 {
+    max-width: 24rem;
+    font-size: 1.25rem;
+    font-weight: 300;
+    line-height: 1.625;
+    text-wrap: pretty;
+    color: var(--color-text);
+    margin: 0;
+  }
+
+  #pencil-ui {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 3;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  #pencil-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.4rem 0.75rem;
+    background: white;
+    border: 1px solid rgba(32, 45, 133, 0.15);
+    border-radius: 0.375rem;
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--color-text);
+    transition: all 0.15s ease;
+    user-select: none;
+  }
+
+  #pencil-btn:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+
+  #pencil-btn[aria-pressed="true"] {
+    background: var(--color-primary);
+    color: white;
+    border-color: var(--color-primary);
+  }
+
+  .tool-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    background: white;
+    border: 1px solid rgba(32, 45, 133, 0.15);
+    border-radius: 0.375rem;
+    cursor: pointer;
+    color: var(--color-text);
+    transition: all 0.15s ease;
+  }
+
+  .tool-btn:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+
+  .tool-btn.active {
+    background: var(--color-primary);
+    color: white;
+    border-color: var(--color-primary);
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  /* Pencil cursor when drawing mode is active */
+  #notebook.drawing-mode {
+    cursor:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M3 21l1.5-5.5L17.5 2.5a2.83 2.83 0 0 1 4 4L8.5 19.5Z' fill='none' stroke='%23333' stroke-width='1.2'/%3E%3C/svg%3E")
+        0 24,
+      crosshair;
+  }
+
+  #notebook.eraser-mode {
+    cursor:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Ccircle cx='10' cy='10' r='8' fill='none' stroke='%23666' stroke-width='1'/%3E%3C/svg%3E")
+        10 10,
+      crosshair;
+  }
+</style>
+
+<script>
+  import p5 from "p5";
+
+  let sketch: p5 | null = null;
+
+  function initSketchpad() {
+    const container = document.getElementById("sketch-container")!;
+    const notebook = document.getElementById("notebook")!;
+    const pencilBtn = document.getElementById("pencil-btn")!;
+    const eraserBtn = document.getElementById("eraser-btn")!;
+    const clearBtn = document.getElementById("clear-btn")!;
+    if (!container || !notebook || !pencilBtn || !eraserBtn || !clearBtn)
+      return;
+
+    if (sketch) {
+      sketch.remove();
+      sketch = null;
+    }
+    container.querySelectorAll("canvas").forEach((c) => c.remove());
+
+    let drawingMode = false;
+    let eraserMode = false;
+
+    function setDrawingMode(on: boolean) {
+      drawingMode = on;
+      eraserMode = false;
+      pencilBtn.setAttribute("aria-pressed", on ? "true" : "false");
+      eraserBtn.classList.toggle("hidden", !on);
+      clearBtn.classList.toggle("hidden", !on);
+      eraserBtn.classList.remove("active");
+      notebook.classList.toggle("drawing-mode", on && !eraserMode);
+      notebook.classList.remove("eraser-mode");
+    }
+
+    function setEraserMode(on: boolean) {
+      eraserMode = on;
+      eraserBtn.classList.toggle("active", on);
+      notebook.classList.toggle("eraser-mode", on);
+      notebook.classList.toggle("drawing-mode", !on && drawingMode);
+    }
+
+    pencilBtn.addEventListener("click", () => {
+      setDrawingMode(!drawingMode);
+    });
+
+    eraserBtn.addEventListener("click", () => {
+      setEraserMode(!eraserMode);
+    });
+
+    sketch = new p5((p: p5) => {
+      // 6B Pencil settings — soft, thick, rich
+      const PENCIL_COLOR = [32, 45, 133]; // primary navy
+      const PENCIL_BASE_WEIGHT = 3;
+      const PENCIL_MAX_WEIGHT = 8;
+      const PENCIL_BASE_ALPHA = 50;
+      const PENCIL_MAX_ALPHA = 160;
+      const ERASER_RADIUS = 24;
+
+      let isDrawing = false;
+      let prevX = 0;
+      let prevY = 0;
+
+      // Store strokes for persistence across redraws
+      let drawingBuffer: p5.Graphics | null = null;
+
+      p.setup = () => {
+        const canvas = p.createCanvas(
+          container.offsetWidth,
+          container.offsetHeight,
+        );
+        canvas.parent(container);
+        p.pixelDensity(window.devicePixelRatio || 1);
+
+        drawingBuffer = p.createGraphics(p.width, p.height);
+        drawingBuffer.pixelDensity(window.devicePixelRatio || 1);
+        drawingBuffer.clear();
+
+        p.clear();
+        p.noLoop();
+
+      };
+
+      function drawPencilStroke(
+        buf: p5.Graphics,
+        x1: number,
+        y1: number,
+        x2: number,
+        y2: number,
+      ) {
+        const d = p.dist(x1, y1, x2, y2);
+        // Speed affects line weight: slower = thicker, more pressure
+        const speed = Math.min(d, 40);
+        const pressure = p.map(speed, 0, 40, 1, 0.3);
+        const weight = p.lerp(
+          PENCIL_MAX_WEIGHT,
+          PENCIL_BASE_WEIGHT,
+          1 - pressure,
+        );
+
+        // Draw multiple jittered lines for soft 6B graphite texture
+        const strokes = 6;
+        for (let i = 0; i < strokes; i++) {
+          const alpha = p.random(
+            PENCIL_BASE_ALPHA * pressure,
+            PENCIL_MAX_ALPHA * pressure,
+          );
+          const jitter = weight * 0.5 + (1 - pressure) * 3;
+          const jx1 = x1 + p.random(-jitter, jitter);
+          const jy1 = y1 + p.random(-jitter, jitter);
+          const jx2 = x2 + p.random(-jitter, jitter);
+          const jy2 = y2 + p.random(-jitter, jitter);
+
+          buf.stroke(PENCIL_COLOR[0], PENCIL_COLOR[1], PENCIL_COLOR[2], alpha);
+          buf.strokeWeight(weight * p.random(0.4, 1.1));
+          buf.line(jx1, jy1, jx2, jy2);
+        }
+
+        // Dense grain scatter for soft pencil texture
+        if (d > 1) {
+          const grainCount = Math.floor(d * 1.5);
+          const spread = weight * 0.8;
+          for (let i = 0; i < grainCount; i++) {
+            const t = p.random();
+            const gx = p.lerp(x1, x2, t) + p.random(-spread, spread);
+            const gy = p.lerp(y1, y2, t) + p.random(-spread, spread);
+            buf.stroke(
+              PENCIL_COLOR[0],
+              PENCIL_COLOR[1],
+              PENCIL_COLOR[2],
+              p.random(15, 50) * pressure,
+            );
+            buf.strokeWeight(p.random(0.5, 1.5));
+            buf.point(gx, gy);
+          }
+        }
+      }
+
+      function eraseAt(buf: p5.Graphics, x: number, y: number) {
+        buf.noStroke();
+        buf.fill(0, 0);
+        buf.erase();
+        buf.ellipse(x, y, ERASER_RADIUS * 2, ERASER_RADIUS * 2);
+        buf.noErase();
+      }
+
+      function renderBuffer() {
+        p.clear();
+        if (drawingBuffer) {
+          p.image(drawingBuffer, 0, 0);
+        }
+      }
+
+      p.mousePressed = () => {
+        if (!drawingMode) return;
+        if (
+          p.mouseX < 0 ||
+          p.mouseX > p.width ||
+          p.mouseY < 0 ||
+          p.mouseY > p.height
+        )
+          return;
+        isDrawing = true;
+        prevX = p.mouseX;
+        prevY = p.mouseY;
+        p.loop();
+      };
+
+      p.mouseDragged = () => {
+        if (!isDrawing || !drawingBuffer) return;
+        const x = p.mouseX;
+        const y = p.mouseY;
+
+        if (eraserMode) {
+          eraseAt(drawingBuffer, x, y);
+        } else {
+          drawPencilStroke(drawingBuffer, prevX, prevY, x, y);
+        }
+
+        prevX = x;
+        prevY = y;
+        renderBuffer();
+      };
+
+      p.mouseReleased = () => {
+        isDrawing = false;
+        p.noLoop();
+      };
+
+      (p as any).touchStarted = () => {
+        if (!drawingMode) return;
+        if (
+          p.mouseX < 0 ||
+          p.mouseX > p.width ||
+          p.mouseY < 0 ||
+          p.mouseY > p.height
+        )
+          return;
+        isDrawing = true;
+        prevX = p.mouseX;
+        prevY = p.mouseY;
+        p.loop();
+        return false;
+      };
+
+      (p as any).touchMoved = () => {
+        if (!isDrawing || !drawingBuffer) return;
+        const x = p.mouseX;
+        const y = p.mouseY;
+
+        if (eraserMode) {
+          eraseAt(drawingBuffer, x, y);
+        } else {
+          drawPencilStroke(drawingBuffer, prevX, prevY, x, y);
+        }
+
+        prevX = x;
+        prevY = y;
+        renderBuffer();
+        return false;
+      };
+
+      (p as any).touchEnded = () => {
+        isDrawing = false;
+        p.noLoop();
+      };
+
+      // Clear button
+      clearBtn.addEventListener("click", () => {
+        if (drawingBuffer) {
+          drawingBuffer.clear();
+          renderBuffer();
+        }
+      });
+
+      // Resize
+      const ro = new ResizeObserver(() => {
+        if (!sketch || !drawingBuffer) return;
+        const w = container.offsetWidth;
+        const h = container.offsetHeight;
+        if (w > 0 && h > 0) {
+          // Preserve existing drawing
+          const temp = drawingBuffer.get();
+          p.resizeCanvas(w, h);
+          drawingBuffer.resizeCanvas(w, h);
+          drawingBuffer.clear();
+          drawingBuffer.image(temp, 0, 0);
+          renderBuffer();
+        }
+      });
+      ro.observe(container);
+    }, container);
+  }
+
+  initSketchpad();
+  document.addEventListener("astro:after-swap", initSketchpad);
+</script>
