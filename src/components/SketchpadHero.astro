@@ -10,31 +10,41 @@ const colors = [
 ];
 ---
 
-<section id="sketchpad-hero" class="px-4 pb-8">
+<section id="sketchpad-hero" class="px-4 pb-16 pt-4">
   <div id="notebook" class="notebook drawing-mode">
-    <canvas id="pixel-canvas" class="absolute inset-0 w-full h-full z-1 block pointer-events-none"></canvas>
+    <canvas
+      id="pixel-canvas"
+      class="absolute inset-0 w-full h-full z-1 block pointer-events-none"
+    ></canvas>
     <div class="relative z-2 px-5 py-8 md:px-8 md:py-12 pointer-events-none">
-      <h1 class="max-w-96 text-xl font-light leading-relaxed text-pretty text-text m-0">
+      <h1
+        class="max-w-96 text-xl font-light leading-relaxed text-pretty text-text m-0"
+      >
         I like experimenting and building friendly and safe web experiences
       </h1>
     </div>
-    <div id="pixel-ui" class="absolute z-3 bottom-3 left-1/2 -translate-x-1/2 flex gap-2 items-center md:left-auto md:right-4 md:bottom-4 md:translate-x-0">
+    <div
+      id="pixel-ui"
+      class="absolute z-3 bottom-3 left-1/2 -translate-x-1/2 flex gap-2 items-center md:left-auto md:right-4 md:bottom-4 md:translate-x-0"
+    >
       <div
         id="palette"
         role="radiogroup"
         aria-label="Color palette"
         class="flex gap-1.5 items-center p-1.5 bg-white border border-[rgba(32,45,133,0.15)] rounded-lg md:gap-1 md:p-1"
       >
-        {colors.map((c, i) => (
-          <button
-            class:list={["swatch", { active: i === 0 }]}
-            data-color={c.value}
-            style={`background:${c.value}`}
-            role="radio"
-            aria-checked={i === 0 ? "true" : "false"}
-            aria-label={c.label}
-          />
-        ))}
+        {
+          colors.map((c, i) => (
+            <button
+              class:list={["swatch", { active: i === 0 }]}
+              data-color={c.value}
+              style={`background:${c.value}`}
+              role="radio"
+              aria-checked={i === 0 ? "true" : "false"}
+              aria-label={c.label}
+            />
+          ))
+        }
       </div>
       <button
         id="eraser-btn"
@@ -299,8 +309,14 @@ const colors = [
         if (setCell(r0, c0)) changed = true;
         if (r0 === r1 && c0 === c1) break;
         const e2 = 2 * err;
-        if (e2 > -dr) { err -= dr; c0 += sc; }
-        if (e2 < dc) { err += dc; r0 += sr; }
+        if (e2 > -dr) {
+          err -= dr;
+          c0 += sc;
+        }
+        if (e2 < dc) {
+          err += dc;
+          r0 += sr;
+        }
       }
       return changed;
     };
