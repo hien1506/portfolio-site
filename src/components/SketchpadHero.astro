@@ -225,6 +225,7 @@ const colors = [
     let eraserMode = false;
     let activeColor = "#202d85";
     let isPointerDown = false;
+    let lastCell: [number, number] | null = null;
 
     const resize = () => {
       const w = notebook.offsetWidth;
@@ -277,15 +278,45 @@ const colors = [
       return [row, col];
     };
 
+    const setCell = (r: number, c: number) => {
+      const newVal = eraserMode ? null : activeColor;
+      if (grid[r] && grid[r][c] !== newVal) {
+        grid[r][c] = newVal;
+        return true;
+      }
+      return false;
+    };
+
+    const lineBetween = (r0: number, c0: number, r1: number, c1: number) => {
+      let dr = Math.abs(r1 - r0);
+      let dc = Math.abs(c1 - c0);
+      const sr = r0 < r1 ? 1 : -1;
+      const sc = c0 < c1 ? 1 : -1;
+      let err = dc - dr;
+      let changed = false;
+
+      while (true) {
+        if (setCell(r0, c0)) changed = true;
+        if (r0 === r1 && c0 === c1) break;
+        const e2 = 2 * err;
+        if (e2 > -dr) { err -= dr; c0 += sc; }
+        if (e2 < dc) { err += dc; r0 += sr; }
+      }
+      return changed;
+    };
+
     const paintCell = (e: MouseEvent | Touch) => {
       const cell = cellFromEvent(e);
       if (!cell) return;
       const [r, c] = cell;
-      const newVal = eraserMode ? null : activeColor;
-      if (grid[r][c] !== newVal) {
-        grid[r][c] = newVal;
-        render();
+      let changed = false;
+      if (lastCell) {
+        changed = lineBetween(lastCell[0], lastCell[1], r, c);
+      } else {
+        changed = setCell(r, c);
       }
+      lastCell = cell;
+      if (changed) render();
     };
 
     const setEraserMode = (on: boolean) => {
@@ -332,10 +363,12 @@ const colors = [
 
     canvas.addEventListener("pointerup", () => {
       isPointerDown = false;
+      lastCell = null;
     });
 
     canvas.addEventListener("pointerleave", () => {
       isPointerDown = false;
+      lastCell = null;
     });
 
     canvas.addEventListener(
