@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
 ---
 
 <!doctype html>
@@ -14,11 +15,12 @@ import Nav from "../components/Nav.astro";
     <title>Astro Basics</title>
   </head>
   <body>
-    <div class="min-h-screen max-w-7xl mx-auto">
+    <div class="min-h-screen max-w-7xl mx-auto flex flex-col">
       <Nav />
-      <main>
+      <main class="flex-1">
         <slot />
       </main>
+      <Footer />
     </div>
   </body>
 </html>
