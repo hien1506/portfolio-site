@@ -21,7 +21,7 @@ const { title, description, image, link, category } = Astro.props;
           <img
             src={image}
             alt={title}
-            class="w-full h-auto block transition-transform duration-300 ease-out group-hover:scale-[1.02]"
+            class="w-full h-auto block"
             loading="lazy"
           />
         ) : (
@@ -29,19 +29,14 @@ const { title, description, image, link, category } = Astro.props;
         )
       }
     </div>
-    <div class="flex flex-col justify-between gap-4">
-      <div class="flex flex-col gap-4">
-        <h3 class="text-base font-semibold leading-tight">{title}</h3>
-        <p class="text-base leading-snug text-neutral-600">
-          {description}
-        </p>
-      </div>
-
-      <span
-        class="mt-2 inline-block text-base underline underline-offset-3 transition-colors duration-150 ease-out group-hover:text-primary"
-      >
-        View project
+    <div class="flex flex-col gap-2">
+      <span class="text-xs uppercase tracking-wider text-neutral-400">
+        {category}
       </span>
+      <h3 class="text-base font-semibold leading-tight">{title}</h3>
+      <p class="text-base leading-snug text-neutral-600">
+        {description}
+      </p>
     </div>
   </a>
 </article>
