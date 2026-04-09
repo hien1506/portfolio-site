@@ -2,6 +2,18 @@
 import "../styles/global.css";
 import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Hien Nguyen",
+  description = "Frontend developer from Melbourne, Australia. Building friendly and safe web experiences.",
+} = Astro.props;
+
+const pageTitle = title === "Hien Nguyen" ? title : `${title} — Hien Nguyen`;
 ---
 
 <!doctype html>
@@ -12,7 +24,14 @@ import Footer from "../components/Footer.astro";
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
-    <title>Astro Basics</title>
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
   </head>
   <body>
     <div class="min-h-screen max-w-7xl mx-auto flex flex-col">
