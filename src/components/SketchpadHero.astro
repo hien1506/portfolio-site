@@ -120,7 +120,8 @@ const colors = [
           </svg>
         </button>
         <div id="tooltip" class="tooltip" role="tooltip" aria-live="polite">
-          Click &amp; drag to draw. Pick a color, use the eraser, or clear all. Your drawing is saved automatically.
+          Click &amp; drag to draw. Pick a color, use the eraser, or clear all.
+          Your drawing is saved automatically.
         </div>
       </div>
     </div>
@@ -138,7 +139,7 @@ const colors = [
     background-image:
       linear-gradient(rgba(32, 45, 133, 0.06) 1px, transparent 1px),
       linear-gradient(90deg, rgba(32, 45, 133, 0.06) 1px, transparent 1px);
-    background-size: 28px 28px;
+    background-size: 20px 20px;
     border: 1px solid rgba(32, 45, 133, 0.1);
   }
 
@@ -269,7 +270,7 @@ const colors = [
 </style>
 
 <script>
-  const CELL = 28;
+  const CELL = 20;
   const STORAGE_KEY = "sketchpad-grid";
 
   const saveGrid = (grid: (string | null)[][], cols: number, rows: number) => {
@@ -289,7 +290,9 @@ const colors = [
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (!raw) return [];
-      const { cells } = JSON.parse(raw) as { cells: [number, number, string][] };
+      const { cells } = JSON.parse(raw) as {
+        cells: [number, number, string][];
+      };
       const grid: (string | null)[][] = [];
       for (const [r, c, color] of cells) {
         if (!grid[r]) grid[r] = [];
@@ -457,12 +460,17 @@ const colors = [
     };
     helpBtn.addEventListener("click", () => toggleTooltip());
     document.addEventListener("pointerdown", (e) => {
-      if (!helpBtn.contains(e.target as Node) && !tooltip.contains(e.target as Node)) {
+      if (
+        !helpBtn.contains(e.target as Node) &&
+        !tooltip.contains(e.target as Node)
+      ) {
         toggleTooltip(false);
       }
     });
 
-    const swatches = [...palette.querySelectorAll<HTMLButtonElement>(".swatch")];
+    const swatches = [
+      ...palette.querySelectorAll<HTMLButtonElement>(".swatch"),
+    ];
 
     const selectSwatch = (btn: HTMLButtonElement) => {
       swatches.forEach((s) => {
