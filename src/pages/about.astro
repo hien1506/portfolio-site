@@ -8,8 +8,6 @@ import { recommendations } from "../data/recommendations";
     <div
       class="grid grid-cols-1 gap-12 border-t border-dotted border-primary/25 pt-8 md:pt-12 md:grid-cols-2 md:gap-8"
     >
-      <!-- Left column: Bio -->
-
       <div>
         <h2
           class="mb-4 text-xs font-semibold uppercase tracking-widest text-text text-pretty"
@@ -26,21 +24,22 @@ import { recommendations } from "../data/recommendations";
             Most of the work here is an attempt to make digital spaces that are
             a little more playful.
           </p>
-          <div
-            class="profile-wrap mt-2 w-full overflow-hidden border-primary border-3"
-          >
+          <figure class="profile-wrap mt-2 w-full overflow-hidden">
             <img
-              src="/profile.jpg"
-              alt="Hien Nguyen"
+              src="/images/profile-picture.webp"
+              alt="A photo of Hien Nguyen taken in a cafe in Tokyo, Japan"
               width="600"
               height="600"
               loading="lazy"
-              class="profile-img aspect-square w-full object-cover"
+              class="profile-img aspect-square w-full object-cover border-primary border-3"
             />
-          </div>
+            <figcaption class="py-2 text-xs text-text/60">
+              Taken in Tokyo, Japan
+            </figcaption>
+          </figure>
           <p>
-            I enjoy photography, spending time in movie theaters, volunteer at
-            the <a
+            I enjoy photography, spending time in movie theaters and am a
+            volunteer at the <a
               class="underline hover:text-ink-muted"
               href="https://altonanorthdojo.com/"
               rel="noopener">Altona North Coder Dojo</a
@@ -80,8 +79,6 @@ import { recommendations } from "../data/recommendations";
           </div>
         </div>
       </div>
-
-      <!-- Right column: Recommendations -->
       <div>
         <h2
           class="mb-5 text-xs font-semibold uppercase tracking-widest text-text text-pretty"
