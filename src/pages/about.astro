@@ -82,7 +82,19 @@ const recommendations = [
                 target="_blank"
                 rel="noopener noreferrer"
                 class="text-text underline decoration-primary/30 underline-offset-[3px] transition-colors duration-150 ease-out hover:decoration-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary motion-reduce:transition-none"
-                >are.na/hien</a
+                >are.na/hien<span class="sr-only"> (opens in new tab)</span></a
+              >
+            </div>
+            <div class="text-sm leading-relaxed">
+              <span class="font-semibold">Instagram:</span>
+              <a
+                href="https://www.instagram.com/hiennguyen1529"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-text underline decoration-primary/30 underline-offset-[3px] transition-colors duration-150 ease-out hover:decoration-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary motion-reduce:transition-none"
+                >@hiennguyen1529<span class="sr-only">
+                  (opens in new tab)</span
+                ></a
               >
             </div>
           </div>
@@ -97,7 +109,7 @@ const recommendations = [
         >
           Recommending
         </h2>
-        <ul class="flex list-none flex-col p-0">
+        <ul role="list" class="flex list-none flex-col p-0">
           {
             recommendations.map((rec, i) => (
               <li
@@ -111,6 +123,7 @@ const recommendations = [
                 <div
                   class="aspect-square w-full rounded"
                   style={`background-color: ${rec.color}`}
+                  aria-hidden="true"
                 />
                 <div class="flex flex-col gap-1.5">
                   <h3 class="text-[0.9375rem] font-semibold leading-tight">
