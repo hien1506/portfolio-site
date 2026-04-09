@@ -4,15 +4,15 @@ import { recommendations } from "../data/recommendations";
 ---
 
 <Layout>
-  <article class="px-4 pt-4 pb-16 text-sm">
+  <article class="px-4 pt-0 pb-16">
     <div
-      class="grid grid-cols-1 gap-12 border-t border-dotted border-primary/25 pt-6 md:grid-cols-2 md:gap-8"
+      class="grid grid-cols-1 gap-12 border-t border-dotted border-primary/25 pt-8 md:pt-12 md:grid-cols-2 md:gap-8"
     >
       <!-- Left column: Bio -->
 
       <div>
         <h2
-          class="mb-5 text-xs font-semibold uppercase tracking-widest text-text"
+          class="mb-4 text-xs font-semibold uppercase tracking-widest text-text text-pretty"
         >
           ABOUT
         </h2>
@@ -74,49 +74,53 @@ import { recommendations } from "../data/recommendations";
       <!-- Right column: Recommendations -->
       <div>
         <h2
-          class="mb-5 text-xs font-semibold uppercase tracking-widest text-text"
+          class="mb-5 text-xs font-semibold uppercase tracking-widest text-text text-pretty"
         >
           Recommending
         </h2>
-        <ul role="list" class="flex list-none flex-col p-0">
-          {
-            recommendations.map((rec, i) => (
-              <li
-                class:list={[
-                  i !== recommendations.length - 1 &&
-                    "border-b border-primary/8",
-                ]}
-              >
-                <a
-                  href={rec.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
+        {
+          recommendations.length === 0 ? (
+            <p class="text-sm text-neutral-500">Nothing here yet.</p>
+          ) : (
+            <ul role="list" class="flex list-none flex-col p-0">
+              {recommendations.map((rec, i) => (
+                <li
                   class:list={[
-                    "grid grid-cols-[8rem_1fr] items-stretch gap-4 no-underline text-inherit focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary rounded-sm",
-                    i === 0 && "pt-0",
+                    i !== recommendations.length - 1 &&
+                      "border-b border-primary/8",
                   ]}
                 >
-                  <div
-                    class="w-full aspect-square"
-                    style={`background-color: ${rec.color}`}
-                    aria-hidden="true"
-                  />
-                  <div class="flex flex-col gap-2 py-4">
-                    <h3 class="text-base font-semibold leading-tight">
-                      {rec.title}
-                    </h3>
-                    <p class="line-clamp-2 text-sm leading-relaxed text-neutral-500">
-                      {rec.description}
-                    </p>
-                    <span class="mt-1 text-xs text-neutral-500">
-                      [{rec.category}]
-                    </span>
-                  </div>
-                </a>
-              </li>
-            ))
-          }
-        </ul>
+                  <a
+                    href={rec.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class:list={[
+                      "grid grid-cols-[8rem_1fr] items-stretch gap-4 no-underline text-inherit hover:opacity-80 transition-opacity duration-150 ease-out focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary rounded-sm motion-reduce:transition-none",
+                      i === 0 && "pt-0",
+                    ]}
+                  >
+                    <div
+                      class="w-full aspect-square"
+                      style={`background-color: ${rec.color}`}
+                      aria-hidden="true"
+                    />
+                    <div class="flex min-w-0 flex-col gap-2 py-4">
+                      <h3 class="text-base font-semibold leading-tight text-pretty">
+                        {rec.title}
+                      </h3>
+                      <p class="line-clamp-2 text-sm leading-relaxed text-neutral-500">
+                        {rec.description}
+                      </p>
+                      <span class="mt-1 text-xs text-neutral-500">
+                        [{rec.category}]
+                      </span>
+                    </div>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )
+        }
       </div>
     </div>
   </article>
