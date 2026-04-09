@@ -7,63 +7,83 @@ const recommendations = [
     description:
       "Karl Gerstner's systematic approach to design. A framework for thinking about visual rules as generative systems.",
     category: "Book",
-    color: "#202d85",
+    color: "#6a9daf",
+    link: "https://www.lars-mueller-publishers.com/designing-programmes",
   },
   {
     title: "Uxn / Varvara",
     description:
       "A personal computing stack built for longevity. Small tools, made to last, running on a tiny virtual machine.",
     category: "Tool",
-    color: "#5a7a5a",
+    color: "#d4917a",
+    link: "https://100r.co/site/uxn.html",
   },
   {
     title: "The Web's Grain",
     description:
       "Frank Chimero on designing for the web's natural material properties rather than fighting against them.",
     category: "Essay",
-    color: "#d4a033",
+    color: "#d4a833",
+    link: "https://frankchimero.com/blog/2015/the-webs-grain/",
   },
   {
     title: "Figma",
     description:
       "Still the best multiplayer design tool. The plugin ecosystem and community resources are unmatched.",
     category: "Tool",
-    color: "#c4523a",
+    color: "#2e2e2e",
+    link: "https://www.figma.com",
   },
   {
     title: "Learning Synths",
     description:
       "Ableton's interactive guide to synthesis. Beautiful example of teaching through direct manipulation.",
     category: "Interactive",
-    color: "#c97b8b",
+    color: "#d9cdb8",
+    link: "https://learningsynths.ableton.com",
+  },
+  {
+    title: "Learning Synths",
+    description:
+      "Ableton's interactive guide to synthesis. Beautiful example of teaching through direct manipulation.",
+    category: "Interactive",
+    color: "#4a8b7f",
+    link: "https://learningsynths.ableton.com",
   },
 ];
 ---
 
 <Layout>
-  <article class="px-4 pt-4 pb-16">
-    <div class="grid grid-cols-1 gap-12 md:grid-cols-2 md:gap-8">
+  <article class="px-4 pt-4 pb-16 text-sm">
+    <div
+      class="grid grid-cols-1 gap-12 border-t border-dotted border-primary/25 pt-6 md:grid-cols-2 md:gap-8"
+    >
       <!-- Left column: Bio -->
+
       <div>
-        <div class="mb-6 border-t border-dotted border-primary/25"></div>
+        <h2
+          class="mb-5 text-xs font-semibold uppercase tracking-widest text-text"
+        >
+          ABOUT
+        </h2>
         <div class="flex flex-col gap-6">
-          <p class="text-[0.9375rem] leading-relaxed text-text">
+          <p class="text-base leading-relaxed text-text">
             Designer and developer interested in building tools that feel
             intuitive and humane. Currently exploring the intersection of
             interaction design and creative coding.
           </p>
-          <p class="text-[0.9375rem] leading-relaxed text-text">
+          <p class="text-base leading-relaxed text-text">
             Most of the work here is an attempt to make digital spaces that are
             a little more playful, a little more considered.
           </p>
-          <div class="mt-2 w-full overflow-hidden rounded-md">
+          <div class="profile-wrap mt-2 w-full overflow-hidden">
             <img
               src="/profile.jpg"
               alt="Hien Nguyen"
               width="600"
               height="600"
               loading="lazy"
-              class="aspect-square w-full object-cover"
+              class="profile-img aspect-square w-full object-cover"
             />
           </div>
           <div class="flex flex-col gap-1 pt-1">
@@ -103,7 +123,6 @@ const recommendations = [
 
       <!-- Right column: Recommendations -->
       <div>
-        <div class="mb-6 border-t border-dotted border-primary/25"></div>
         <h2
           class="mb-5 text-xs font-semibold uppercase tracking-widest text-text"
         >
@@ -114,28 +133,36 @@ const recommendations = [
             recommendations.map((rec, i) => (
               <li
                 class:list={[
-                  "grid grid-cols-[5.5rem_1fr] items-start gap-4 py-5",
-                  i === 0 && "pt-0",
                   i !== recommendations.length - 1 &&
                     "border-b border-primary/8",
                 ]}
               >
-                <div
-                  class="aspect-square w-full rounded"
-                  style={`background-color: ${rec.color}`}
-                  aria-hidden="true"
-                />
-                <div class="flex flex-col gap-1.5">
-                  <h3 class="text-[0.9375rem] font-semibold leading-tight">
-                    {rec.title}
-                  </h3>
-                  <p class="text-[0.8125rem] leading-relaxed text-neutral-500">
-                    {rec.description}
-                  </p>
-                  <span class="mt-1 text-xs text-neutral-500">
-                    [{rec.category}]
-                  </span>
-                </div>
+                <a
+                  href={rec.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class:list={[
+                    "grid grid-cols-[8rem_1fr] items-stretch gap-4 no-underline text-inherit focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary rounded-sm",
+                    i === 0 && "pt-0",
+                  ]}
+                >
+                  <div
+                    class="w-full aspect-square"
+                    style={`background-color: ${rec.color}`}
+                    aria-hidden="true"
+                  />
+                  <div class="flex flex-col gap-2 py-4">
+                    <h3 class="text-base font-semibold leading-tight">
+                      {rec.title}
+                    </h3>
+                    <p class="line-clamp-2 text-sm leading-relaxed text-neutral-500">
+                      {rec.description}
+                    </p>
+                    <span class="mt-1 text-xs text-neutral-500">
+                      [{rec.category}]
+                    </span>
+                  </div>
+                </a>
               </li>
             ))
           }
