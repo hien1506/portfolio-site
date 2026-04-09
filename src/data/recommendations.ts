@@ -4,16 +4,19 @@ export interface Recommendation {
   category: string;
   color: string;
   link: string;
+  image?: string;
 }
 
 export const recommendations: Recommendation[] = [
   {
-    title: "Designing Programs",
+    title: "The Nature of Code",
     description:
-      "Karl Gerstner's systematic approach to design. A framework for thinking about visual rules as generative systems.",
+      "A book on generative systems and creative coding by Daniel Shiffman.",
     category: "Book",
     color: "#6a9daf",
-    link: "https://www.lars-mueller-publishers.com/designing-programmes",
+    link: "https://natureofcode.com/",
+    image:
+      "https://m.media-amazon.com/images/I/61F2XWTTtYL._AC_UF1000,1000_QL80_.jpg",
   },
   {
     title: "Uxn / Varvara",
@@ -32,27 +35,11 @@ export const recommendations: Recommendation[] = [
     link: "https://frankchimero.com/blog/2015/the-webs-grain/",
   },
   {
-    title: "Figma",
-    description:
-      "Still the best multiplayer design tool. The plugin ecosystem and community resources are unmatched.",
-    category: "Tool",
-    color: "#2e2e2e",
-    link: "https://www.figma.com",
-  },
-  {
     title: "Learning Synths",
     description:
       "Ableton's interactive guide to synthesis. Beautiful example of teaching through direct manipulation.",
     category: "Interactive",
     color: "#d9cdb8",
-    link: "https://learningsynths.ableton.com",
-  },
-  {
-    title: "Learning Synths",
-    description:
-      "Ableton's interactive guide to synthesis. Beautiful example of teaching through direct manipulation.",
-    category: "Interactive",
-    color: "#4a8b7f",
     link: "https://learningsynths.ableton.com",
   },
 ];

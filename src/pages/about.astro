@@ -99,11 +99,20 @@ import { recommendations } from "../data/recommendations";
                       i === 0 && "pt-0",
                     ]}
                   >
-                    <div
-                      class="w-full aspect-square"
-                      style={`background-color: ${rec.color}`}
-                      aria-hidden="true"
-                    />
+                    {rec.image ? (
+                      <img
+                        src={rec.image}
+                        alt=""
+                        class="w-full aspect-square object-cover"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div
+                        class="w-full aspect-square"
+                        style={`background-color: ${rec.color}`}
+                        aria-hidden="true"
+                      />
+                    )}
                     <div class="flex min-w-0 flex-col gap-2 py-4">
                       <h3 class="text-base font-semibold leading-tight text-pretty">
                         {rec.title}
