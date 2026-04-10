@@ -42,6 +42,7 @@ const filters: FilterOption[] = [
     border: none;
     padding: 0;
     touch-action: manipulation;
+    transition: font-weight 150ms ease, opacity 100ms ease;
   }
 
   .filter-btn[aria-pressed="true"] {
@@ -50,6 +51,12 @@ const filters: FilterOption[] = [
 
   .filter-btn:active {
     opacity: 0.6;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .filter-btn {
+      transition: none;
+    }
   }
 
   .filter-check {
