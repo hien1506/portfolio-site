@@ -10,11 +10,15 @@ import font500 from "@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-500-nor
 interface Props {
   title?: string;
   description?: string;
+  hideNav?: boolean;
+  hideFooter?: boolean;
 }
 
 const {
   title = "Hien Nguyen",
   description = "Frontend developer from Melbourne, Australia. Building friendly and safe web experiences.",
+  hideNav = false,
+  hideFooter = false,
 } = Astro.props;
 
 const pageTitle = title === "Hien Nguyen" ? title : `${title} — Hien Nguyen`;
@@ -41,11 +45,11 @@ const pageTitle = title === "Hien Nguyen" ? title : `${title} — Hien Nguyen`;
   </head>
   <body>
     <div class="min-h-screen max-w-7xl mx-auto flex flex-col">
-      <Nav />
+      {!hideNav && <Nav />}
       <main class="flex-1">
         <slot />
       </main>
-      <Footer />
+      {!hideFooter && <Footer />}
     </div>
   </body>
 </html>
