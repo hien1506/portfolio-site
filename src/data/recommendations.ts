@@ -42,28 +42,4 @@ export const recommendations: Recommendation[] = [
     color: "#d9cdb8",
     link: "https://learningsynths.ableton.com",
   },
-  {
-    title: "The Web's Grain",
-    description:
-      "Frank Chimero on designing for the web's natural material properties rather than fighting against them.",
-    category: "Essay",
-    color: "#d4a833",
-    link: "https://frankchimero.com/blog/2015/the-webs-grain/",
-  },
-  {
-    title: "Learning Synths",
-    description:
-      "Ableton's interactive guide to synthesis. Beautiful example of teaching through direct manipulation.",
-    category: "Interactive",
-    color: "#d9cdb8",
-    link: "https://learningsynths.ableton.com",
-  },
-  {
-    title: "The Web's Grain",
-    description:
-      "Frank Chimero on designing for the web's natural material properties rather than fighting against them.",
-    category: "Essay",
-    color: "#d4a833",
-    link: "https://frankchimero.com/blog/2015/the-webs-grain/",
-  },
 ];

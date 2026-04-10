@@ -5,7 +5,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "");
 <nav class="flex justify-between items-center p-4 text-sm">
   <a
     href="/"
-    class="flex items-center gap-2 rounded text-text no-underline"
+    class="flex items-center gap-2 rounded text-text no-underline hover:font-medium active:font-medium"
   >
     <span
       class="inline-block h-4 w-4 shrink-0 rounded-full bg-primary"
@@ -17,7 +17,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "");
       <a
         href="/#projects"
         class:list={[
-          "text-text no-underline",
+          "text-text no-underline hover:font-medium active:font-medium",
           currentPath === "" ? "font-medium" : "",
         ]}
         >Projects</a
@@ -27,7 +27,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "");
       <a
         href="/about"
         class:list={[
-          "text-text no-underline",
+          "text-text no-underline hover:font-medium active:font-medium",
           currentPath === "/about" ? "font-medium" : "",
         ]}
         >About</a
