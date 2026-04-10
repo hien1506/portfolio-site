@@ -2,9 +2,22 @@ export interface Recommendation {
   title: string;
   description: string;
   category: string;
-  color: string;
   link: string;
   image?: string;
+}
+
+// Palette derived from profile photo — cafe blues, warm beige, orange signage, muted pink
+const palette = [
+  "#5b9aad", // blue chairs
+  "#d4a87c", // warm beige wall
+  "#e0965a", // orange signage
+  "#c9a0a0", // muted pink table
+  "#7a9b8a", // faded green railing
+  "#b8a58a", // sandy concrete
+];
+
+export function paletteColor(index: number): string {
+  return palette[index % palette.length];
 }
 
 export const recommendations: Recommendation[] = [
@@ -13,17 +26,13 @@ export const recommendations: Recommendation[] = [
     description:
       "A book on generative systems and creative coding by Daniel Shiffman.",
     category: "Book",
-    color: "#6a9daf",
     link: "https://natureofcode.com/",
-    image:
-      "https://m.media-amazon.com/images/I/61F2XWTTtYL._AC_UF1000,1000_QL80_.jpg",
   },
   {
     title: "Uxn / Varvara",
     description:
       "A personal computing stack built for longevity. Small tools, made to last, running on a tiny virtual machine.",
     category: "Tool",
-    color: "#d4917a",
     link: "https://100r.co/site/uxn.html",
   },
   {
@@ -31,7 +40,6 @@ export const recommendations: Recommendation[] = [
     description:
       "Frank Chimero on designing for the web's natural material properties rather than fighting against them.",
     category: "Essay",
-    color: "#d4a833",
     link: "https://frankchimero.com/blog/2015/the-webs-grain/",
   },
   {
@@ -39,7 +47,6 @@ export const recommendations: Recommendation[] = [
     description:
       "Ableton's interactive guide to synthesis. Beautiful example of teaching through direct manipulation.",
     category: "Interactive",
-    color: "#d9cdb8",
     link: "https://learningsynths.ableton.com",
   },
 ];

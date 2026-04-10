@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { recommendations } from "../data/recommendations";
+import { recommendations, paletteColor } from "../data/recommendations";
 ---
 
 <Layout title="About">
@@ -116,7 +116,7 @@ import { recommendations } from "../data/recommendations";
                     ) : (
                       <div
                         class="w-full aspect-square"
-                        style={`background-color: ${rec.color}`}
+                        style={`background-color: ${paletteColor(i)}`}
                         aria-hidden="true"
                       />
                     )}
