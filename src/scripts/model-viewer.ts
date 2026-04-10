@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 
 document.querySelectorAll<HTMLElement>("[data-model-viewer]").forEach((el) => {
@@ -41,7 +42,13 @@ document.querySelectorAll<HTMLElement>("[data-model-viewer]").forEach((el) => {
   controls.minDistance = 0.5;
   controls.maxDistance = 20;
 
-  new GLTFLoader().load(src, (gltf) => {
+  const dracoLoader = new DRACOLoader();
+  dracoLoader.setDecoderPath("https://www.gstatic.com/draco/versioned/decoders/1.5.7/");
+
+  const gltfLoader = new GLTFLoader();
+  gltfLoader.setDRACOLoader(dracoLoader);
+
+  gltfLoader.load(src, (gltf) => {
     const model = gltf.scene;
 
     const box = new THREE.Box3().setFromObject(model);
