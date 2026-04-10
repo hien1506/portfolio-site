@@ -18,11 +18,16 @@ const { entry } = Astro.props;
 const { Content } = await render(entry);
 ---
 
-<Layout title={entry.data.title} description={entry.data.description} hideNav hideFooter>
+<Layout
+  title={entry.data.title}
+  description={entry.data.description}
+  hideNav
+  hideFooter
+>
   <article class="mx-auto max-w-3xl px-4 py-16">
     <a
       href="/"
-      class="mb-8 inline-block text-sm underline decoration-text/20 underline-offset-3 transition-[text-decoration-color] duration-150 ease hover:decoration-primary active:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary motion-reduce:transition-none"
+      class="mb-8 inline-block text-sm underline decoration-text/20 underline-offset-5 transition-[text-decoration-color] duration-150 ease hover:decoration-text active:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-text motion-reduce:transition-none"
     >
       &larr; All projects
     </a>

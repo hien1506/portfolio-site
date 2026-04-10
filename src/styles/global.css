@@ -30,6 +30,17 @@ body {
   background-color: var(--color-background);
 }
 
+.prose a {
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, currentColor 20%);
+  text-underline-offset: 4px;
+  transition: text-decoration-color 150ms ease;
+}
+
+.prose a:hover {
+  text-decoration-color: var(--color-primary);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
