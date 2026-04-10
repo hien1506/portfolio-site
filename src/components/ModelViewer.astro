@@ -1,0 +1,15 @@
+---
+interface Props {
+  src: string;
+}
+const { src } = Astro.props;
+---
+
+<div
+  data-model-viewer
+  data-model-src={src}
+  class="aspect-4/3 w-full overflow-hidden rounded-lg"
+>
+</div>
+
+<script src="../scripts/model-viewer.ts"></script>

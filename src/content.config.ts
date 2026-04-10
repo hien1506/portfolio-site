@@ -11,6 +11,7 @@ const projects = defineCollection({
     description: z.string(),
     category: z.enum(["project", "writing", "experiment"]),
     image: z.string().optional(),
+    model: z.string().optional(),
     /** When set, list row links here and no static page is generated. */
     externalUrl: z.string().url().optional(),
     publishedAt: z.date(),
