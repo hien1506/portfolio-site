@@ -14,13 +14,13 @@ import { recommendations } from "../data/recommendations";
         >
           ABOUT
         </h2>
-        <div class="flex flex-col gap-6">
-          <p class="text-base leading-relaxed text-text">
+        <div class="flex max-w-prose flex-col gap-6">
+          <p class="text-sm leading-relaxed text-text">
             I'm a frontend developer from Melbourne, Australia. I am curious
             person who loves trying new things and am currently learning
             creative web technologies like p5.js and three.js.
           </p>
-          <p class="text-base leading-relaxed text-text">
+          <p class="text-sm leading-relaxed text-text">
             Most of the work here is an attempt to make digital spaces that are
             a little more playful.
           </p>
@@ -33,11 +33,11 @@ import { recommendations } from "../data/recommendations";
               loading="lazy"
               class="profile-img aspect-square w-full object-cover border-primary border-3"
             />
-            <figcaption class="py-2 text-xs text-text/60">
+            <figcaption class="py-2 text-xs text-faint">
               Taken in Tokyo, Japan
             </figcaption>
           </figure>
-          <p>
+          <p class="text-sm leading-relaxed text-text">
             I enjoy photography, spending time in movie theaters and am a
             volunteer at the <a
               class="underline hover:text-ink-muted"
@@ -81,13 +81,13 @@ import { recommendations } from "../data/recommendations";
       </div>
       <div>
         <h2
-          class="mb-5 text-xs font-semibold uppercase tracking-widest text-text text-pretty"
+          class="mb-4 text-xs font-semibold uppercase tracking-widest text-text text-pretty"
         >
           Recommending
         </h2>
         {
           recommendations.length === 0 ? (
-            <p class="text-sm text-neutral-500">Nothing here yet.</p>
+            <p class="text-sm text-muted">Nothing here yet.</p>
           ) : (
             <ul role="list" class="flex list-none flex-col p-0">
               {recommendations.map((rec, i) => (
@@ -124,10 +124,10 @@ import { recommendations } from "../data/recommendations";
                       <h3 class="text-base font-semibold leading-tight text-pretty">
                         {rec.title}
                       </h3>
-                      <p class="line-clamp-2 text-sm leading-relaxed text-neutral-500">
+                      <p class="line-clamp-2 text-sm leading-relaxed text-muted">
                         {rec.description}
                       </p>
-                      <span class="mt-1 text-xs text-neutral-500">
+                      <span class="mt-1 text-xs text-faint">
                         [{rec.category}]
                       </span>
                     </div>

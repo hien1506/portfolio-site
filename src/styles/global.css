@@ -5,6 +5,8 @@
   --font-mono: "IBM Plex Mono", monospace;
   --color-primary: #202d85;
   --color-text: #0f0e0e;
+  --color-muted: #6b6b6b;
+  --color-faint: #9a9a9a;
   --color-background: #ffffff;
 }
 
