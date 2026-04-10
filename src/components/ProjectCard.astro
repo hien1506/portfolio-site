@@ -13,7 +13,7 @@ const { title, description, image, link, category } = Astro.props;
 <article data-category={category}>
   <a
     href={link}
-    class="group flex flex-col gap-4 no-underline rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+    class="group flex flex-col gap-4 no-underline rounded-sm active:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
   >
     <div class="overflow-hidden rounded-sm bg-neutral-200">
       {
@@ -33,8 +33,8 @@ const { title, description, image, link, category } = Astro.props;
       <span class="text-xs uppercase tracking-widest text-faint">
         {category}
       </span>
-      <h3 class="text-base font-semibold leading-tight text-pretty">{title}</h3>
-      <p class="text-sm leading-relaxed text-muted">
+      <h3 class="text-base font-medium leading-tight text-pretty">{title}</h3>
+      <p class="text-sm leading-relaxed text-balance">
         {description}
       </p>
     </div>

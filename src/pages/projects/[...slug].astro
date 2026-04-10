@@ -21,14 +21,14 @@ const { Content } = await render(entry);
   <article class="mx-auto max-w-2xl px-4 py-16">
     <a
       href="/"
-      class="mb-8 inline-block text-sm underline underline-offset-3 transition-colors duration-150 ease-out hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+      class="mb-8 inline-block text-sm underline underline-offset-3 active:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
     >
       &larr; All projects
     </a>
-    <h1 class="text-2xl font-semibold leading-tight text-pretty">
+    <h1 class="text-2xl font-medium leading-tight text-pretty">
       {entry.data.title}
     </h1>
-    <p class="mt-2 text-sm leading-relaxed text-muted">
+    <p class="mt-2 text-sm leading-relaxed">
       {entry.data.description}
     </p>
     <hr class="my-8 border-neutral-200" />

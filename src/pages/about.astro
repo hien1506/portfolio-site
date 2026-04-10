@@ -10,7 +10,7 @@ import { recommendations } from "../data/recommendations";
     >
       <div>
         <h2
-          class="mb-4 text-xs font-semibold uppercase tracking-widest text-text text-pretty"
+          class="mb-4 text-xs font-medium uppercase tracking-widest text-text text-pretty"
         >
           ABOUT
         </h2>
@@ -40,37 +40,37 @@ import { recommendations } from "../data/recommendations";
           <p class="text-sm leading-relaxed text-text">
             I enjoy photography, spending time in movie theaters and am a
             volunteer at the <a
-              class="underline hover:text-ink-muted"
+              class="underline active:opacity-70"
               href="https://altonanorthdojo.com/"
               rel="noopener">Altona North Coder Dojo</a
             >. If my work resonates with you, please reach out.
           </p>
           <div class="flex flex-col gap-1 pt-1">
             <div class="text-sm leading-relaxed">
-              <span class="font-semibold">Email:</span>
+              <span class="font-medium">Email:</span>
               <a
                 href="mailto:hiennguyen1529@gmail.com"
-                class="text-text underline decoration-primary/30 underline-offset-[3px] transition-colors duration-150 ease-out hover:decoration-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary motion-reduce:transition-none"
+                class="text-text underline decoration-text/20 underline-offset-[3px] active:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                 >hiennguyen1529@gmail.com</a
               >
             </div>
             <div class="text-sm leading-relaxed">
-              <span class="font-semibold">Arena:</span>
+              <span class="font-medium">Arena:</span>
               <a
                 href="https://www.are.na/hien-nguyen"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="text-text underline decoration-primary/30 underline-offset-[3px] transition-colors duration-150 ease-out hover:decoration-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary motion-reduce:transition-none"
+                class="text-text underline decoration-text/20 underline-offset-[3px] active:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                 >are.na/hien<span class="sr-only"> (opens in new tab)</span></a
               >
             </div>
             <div class="text-sm leading-relaxed">
-              <span class="font-semibold">Instagram:</span>
+              <span class="font-medium">Instagram:</span>
               <a
                 href="https://www.instagram.com/hiennguyen1529"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="text-text underline decoration-primary/30 underline-offset-[3px] transition-colors duration-150 ease-out hover:decoration-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary motion-reduce:transition-none"
+                class="text-text underline decoration-text/20 underline-offset-[3px] active:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                 >@hiennguyen1529<span class="sr-only">
                   (opens in new tab)</span
                 ></a
@@ -81,13 +81,13 @@ import { recommendations } from "../data/recommendations";
       </div>
       <div>
         <h2
-          class="mb-4 text-xs font-semibold uppercase tracking-widest text-text text-pretty"
+          class="mb-4 text-xs font-medium uppercase tracking-widest text-text text-pretty"
         >
           Recommending
         </h2>
         {
           recommendations.length === 0 ? (
-            <p class="text-sm text-muted">Nothing here yet.</p>
+            <p class="text-sm">Nothing here yet.</p>
           ) : (
             <ul role="list" class="flex list-none flex-col p-0">
               {recommendations.map((rec, i) => (
@@ -102,7 +102,7 @@ import { recommendations } from "../data/recommendations";
                     target="_blank"
                     rel="noopener noreferrer"
                     class:list={[
-                      "grid grid-cols-[8rem_1fr] items-stretch gap-4 no-underline text-inherit hover:opacity-80 transition-opacity duration-150 ease-out focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary rounded-sm motion-reduce:transition-none",
+                      "grid grid-cols-[8rem_1fr] items-stretch gap-4 no-underline text-inherit active:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary rounded-sm",
                       i === 0 && "pt-0",
                     ]}
                   >
@@ -121,10 +121,10 @@ import { recommendations } from "../data/recommendations";
                       />
                     )}
                     <div class="flex min-w-0 flex-col gap-2 py-4">
-                      <h3 class="text-base font-semibold leading-tight text-pretty">
+                      <h3 class="text-base font-medium leading-tight text-pretty">
                         {rec.title}
                       </h3>
-                      <p class="line-clamp-2 text-sm leading-relaxed text-muted">
+                      <p class="line-clamp-2 text-sm leading-relaxed">
                         {rec.description}
                       </p>
                       <span class="mt-1 text-xs text-faint">

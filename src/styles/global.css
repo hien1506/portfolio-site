@@ -1,5 +1,9 @@
 @import "tailwindcss";
-@import "@fontsource/ibm-plex-mono";
+@import "@fontsource/ibm-plex-mono/300.css";
+@import "@fontsource/ibm-plex-mono/400.css";
+@import "@fontsource/ibm-plex-mono/500.css";
+@import "@fontsource/ibm-plex-mono/600.css";
+@import "@fontsource/ibm-plex-mono/700.css";
 
 @theme {
   --font-mono: "IBM Plex Mono", monospace;
@@ -21,6 +25,7 @@ body {
   width: 100%;
   min-height: 100dvh;
   font-family: var(--font-mono);
+  font-weight: 300;
   color: var(--color-text);
   background-color: var(--color-background);
 }
