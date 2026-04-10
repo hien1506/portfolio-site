@@ -43,7 +43,9 @@ document.querySelectorAll<HTMLElement>("[data-model-viewer]").forEach((el) => {
   controls.maxDistance = 20;
 
   const dracoLoader = new DRACOLoader();
-  dracoLoader.setDecoderPath("https://www.gstatic.com/draco/versioned/decoders/1.5.7/");
+  dracoLoader.setDecoderPath(
+    "https://www.gstatic.com/draco/versioned/decoders/1.5.7/",
+  );
 
   const gltfLoader = new GLTFLoader();
   gltfLoader.setDRACOLoader(dracoLoader);
