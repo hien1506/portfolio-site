@@ -12,15 +12,14 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "");
       aria-hidden="true"></span>
     <span>Hien Nguyen</span>
   </a>
-  <ul class="flex items-center gap-4">
+  <ul class="flex items-center gap-4 md:gap-8">
     <li>
       <a
         href="/#projects"
         class:list={[
           "text-text no-underline hover:font-medium active:font-medium",
           currentPath === "" ? "font-medium" : "",
-        ]}
-        >Projects</a
+        ]}>Projects</a
       >
     </li>
     <li>
@@ -29,8 +28,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "");
         class:list={[
           "text-text no-underline hover:font-medium active:font-medium",
           currentPath === "/about" ? "font-medium" : "",
-        ]}
-        >About</a
+        ]}>About</a
       >
     </li>
   </ul>

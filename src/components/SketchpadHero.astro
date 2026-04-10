@@ -39,6 +39,7 @@ const colors = [
               role="radio"
               aria-checked={i === 0 ? "true" : "false"}
               aria-label={c.label}
+              title={c.label}
             />
           ))
         }
@@ -138,7 +139,7 @@ const colors = [
     background-image:
       linear-gradient(rgba(32, 45, 133, 0.06) 1px, transparent 1px),
       linear-gradient(90deg, rgba(32, 45, 133, 0.06) 1px, transparent 1px);
-    background-size: 20px 20px;
+    background-size: 16px 16px;
     border: 1px solid rgba(32, 45, 133, 0.1);
   }
 
@@ -300,7 +301,7 @@ const colors = [
 </style>
 
 <script>
-  const CELL = 20;
+  const CELL = 16;
   const STORAGE_KEY = "sketchpad-grid";
 
   const saveGrid = (grid: (string | null)[][], cols: number, rows: number) => {
