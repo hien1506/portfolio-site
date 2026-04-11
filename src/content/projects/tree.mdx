@@ -1,0 +1,18 @@
+---
+title: p5.js tree
+description: A 3D ramen bowl modeled in Blender.
+category: experiment
+publishedAt: 2026-04-10
+draft: false
+image: /images/projects/tree.webp
+---
+
+import Tree from "../../components/Tree.astro";
+
+<Tree />
+
+### How it works
+
+Move your mouse across the canvas to direct the wind. The tree's branches and leaves respond with graduated compliance: the trunk barely moves, while outer branches and leaves flutter dramatically.
+Each seed generates a unique tree with its own personality (branch angles, lengths, leaf placement all seeded via Perlin noise).
+Wave propagation means sway travels outward from trunk to tip with a phase delay, just like a real tree.

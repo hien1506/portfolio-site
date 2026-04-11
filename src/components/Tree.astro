@@ -1,0 +1,1067 @@
+---
+interface Props {
+  seed?: number;
+  class?: string;
+  showPanel?: boolean;
+}
+
+const { seed = 847051, class: className = "", showPanel = false } = Astro.props;
+
+const componentId = `arboreal-${Math.random().toString(36).slice(2, 9)}`;
+
+const sliders = [
+  {
+    label: "Branch Depth",
+    param: "maxDepth",
+    min: "6",
+    max: "12",
+    step: "1",
+    value: "9",
+  },
+  {
+    label: "Wind Strength",
+    param: "windStrength",
+    min: "0.1",
+    max: "3.0",
+    step: "0.1",
+    value: "1.2",
+    help: "How strongly the cursor influences the tree",
+  },
+  {
+    label: "Sway Speed",
+    param: "swaySpeed",
+    min: "0.5",
+    max: "4.0",
+    step: "0.1",
+    value: "1.5",
+  },
+  {
+    label: "Leaf Density",
+    param: "leafDensity",
+    min: "1",
+    max: "6",
+    step: "1",
+    value: "3",
+  },
+  {
+    label: "Trunk Thickness",
+    param: "trunkWidth",
+    min: "8",
+    max: "30",
+    step: "1",
+    value: "24",
+  },
+  {
+    label: "Branch Spread",
+    param: "branchSpread",
+    min: "0.2",
+    max: "0.8",
+    step: "0.05",
+    value: "0.45",
+  },
+];
+
+const colours = [
+  { label: "Bark", index: "0", value: "#5c3d2e" },
+  { label: "Canopy", index: "1", value: "#4a7c3f" },
+  { label: "Leaf Highlight", index: "2", value: "#8fbc5a" },
+];
+
+const seedButtons = [
+  { action: "prev-seed", label: "← Prev", ariaLabel: "Previous seed" },
+  { action: "next-seed", label: "Next →", ariaLabel: "Next seed" },
+];
+
+const ctrlBtnBase =
+  "ctrl-btn w-full cursor-pointer rounded px-3 py-2 font-sans text-xs font-medium tracking-wide transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2";
+
+const ctrlBtnClass = `${ctrlBtnBase} border border-[var(--tree-border)] bg-[var(--tree-surface-raised)] text-[var(--tree-ink-muted)] hover:border-[var(--tree-border-strong)] hover:bg-[var(--tree-surface-hover)] hover:text-[var(--tree-ink)] focus-visible:outline-[var(--tree-focus)] active:bg-[var(--tree-border)]`;
+
+const ctrlBtnPrimary = `${ctrlBtnBase} border border-[var(--tree-ink)] bg-[var(--tree-ink)] text-[var(--tree-surface)] hover:bg-black hover:border-black focus-visible:outline-[var(--tree-focus)] active:bg-[var(--tree-ink-muted)]`;
+---
+
+<!-- Component root -->
+<div
+  id={componentId}
+  class:list={["arboreal-breath relative w-full", className]}
+  data-seed={seed}
+  data-show-panel={showPanel ? "true" : "false"}
+>
+  <!-- Backdrop -->
+  <div
+    data-ref="backdrop"
+    class="pointer-events-none fixed inset-0 z-40 transition-[background-color] duration-250"
+    style="transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);"
+  >
+  </div>
+
+  <!-- Control panel (fixed to left edge of viewport) -->
+  <div
+    data-ref="sidebar"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Tree settings"
+    class="panel fixed top-0 left-0 z-50 h-screen w-[350px] max-sm:w-full overflow-y-auto overflow-x-hidden border-r border-[var(--tree-border)] bg-[var(--tree-surface)] p-5 pt-14 font-mono shadow-lg overscroll-contain"
+  >
+    <!-- Close button inside panel -->
+    <button
+      data-ref="panel-close"
+      class="absolute top-3 right-3 flex h-7 w-7 cursor-pointer items-center justify-center rounded-md text-[var(--tree-ink-faint)] transition-colors hover:text-[var(--tree-ink)] focus-visible:ring-2 focus-visible:ring-[var(--tree-focus)] focus-visible:ring-offset-2"
+      type="button"
+      aria-label="Close settings panel"
+    >
+      <svg
+        width="14"
+        height="14"
+        viewBox="0 0 14 14"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        aria-hidden="true"
+      >
+        <line x1="1" y1="1" x2="13" y2="13"></line><line
+          x1="13"
+          y1="1"
+          x2="1"
+          y2="13"></line>
+      </svg>
+    </button>
+    <div class="flex flex-col gap-6">
+      <!-- Header -->
+      <div class="flex flex-col gap-2">
+        <h2
+          class="text-xs font-semibold uppercase tracking-wider text-[var(--tree-ink)]"
+        >
+          Arboreal Breath
+        </h2>
+        <p class="text-sm font-light leading-relaxed text-[var(--tree-ink)]">
+          Move the mouse to shape the wind. Each seed grows a unique tree.
+        </p>
+      </div>
+
+      <!-- Seed -->
+      <div
+        class="flex flex-col gap-3 border-b border-[var(--tree-border)] pb-6"
+      >
+        <h3
+          class="flex items-center gap-2 text-xs font-medium uppercase text-[var(--tree-ink)]"
+        >
+          Seed
+        </h3>
+        <div class="flex flex-col gap-2">
+          <input
+            type="number"
+            data-ref="seed-input"
+            aria-label="Seed value"
+            autocomplete="off"
+            class="w-full rounded border border-[var(--tree-border)] bg-[var(--tree-surface-raised)] px-2 py-2 text-center font-mono text-xs text-[var(--tree-ink)] focus-visible:border-[var(--tree-ink-faint)] focus-visible:bg-[var(--tree-surface)] focus-visible:ring-2 focus-visible:ring-[var(--tree-focus)]"
+            value={seed}
+          />
+          <div class="grid grid-cols-2 gap-2">
+            {
+              seedButtons.map((b) => (
+                <button
+                  data-action={b.action}
+                  class={ctrlBtnClass}
+                  type="button"
+                  aria-label={b.ariaLabel}
+                >
+                  {b.label}
+                </button>
+              ))
+            }
+          </div>
+          <button
+            data-action="random-seed"
+            class={ctrlBtnPrimary}
+            type="button"
+            aria-label="Random seed"
+            ><span aria-hidden="true">↻</span> Random</button
+          >
+        </div>
+      </div>
+
+      <!-- Parameters -->
+      <div
+        class="flex flex-col gap-3 border-b border-[var(--tree-border)] pb-6"
+      >
+        <h3
+          class="flex items-center gap-2 text-xs font-medium uppercase text-[var(--tree-ink)]"
+        >
+          Parameters
+        </h3>
+        <div class="flex flex-col gap-4">
+          {
+            sliders.map((s) => (
+              <div class="flex flex-col gap-1">
+                <label class="block text-xs font-normal text-[var(--tree-ink)]">
+                  {s.label}
+                </label>
+                <div class="flex items-center gap-2">
+                  <input
+                    type="range"
+                    data-param={s.param}
+                    min={s.min}
+                    max={s.max}
+                    step={s.step}
+                    value={s.value}
+                    class="param-slider"
+                    aria-label={s.label}
+                  />
+                  <span
+                    class="min-w-10 text-right font-sans text-xs text-[var(--tree-ink-faint)]"
+                    data-display={s.param}
+                  >
+                    {s.value}
+                  </span>
+                </div>
+                {s.help && (
+                  <span class="block text-xs font-light text-[var(--tree-ink-faint)]">
+                    {s.help}
+                  </span>
+                )}
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
+      <!-- Colours -->
+      <div
+        class="flex flex-col gap-3 border-b border-[var(--tree-border)] pb-6"
+      >
+        <h3
+          class="flex items-center gap-2 text-xs font-medium uppercase text-[var(--tree-ink)]"
+        >
+          Colours
+        </h3>
+        <div class="grid grid-cols-3 max-sm:grid-cols-2 gap-3">
+          {
+            colours.map((c) => (
+              <div class="flex flex-col gap-1">
+                <label class="text-xs text-[var(--tree-ink-faint)]">
+                  {c.label}
+                </label>
+                <div class="flex items-center gap-2">
+                  <input
+                    type="color"
+                    data-colour={c.index}
+                    value={c.value}
+                    class="h-6 w-6 cursor-pointer rounded border border-[var(--tree-border)] bg-transparent p-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--tree-focus)]"
+                    aria-label={`${c.label} colour`}
+                  />
+                  <span
+                    class="font-mono text-xs text-[var(--tree-ink-faint)]"
+                    data-colour-display={c.index}
+                  >
+                    {c.value}
+                  </span>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="flex flex-col gap-3">
+        <h3
+          class="flex items-center gap-2 text-xs font-medium uppercase text-[var(--tree-ink)]"
+        >
+          Actions
+        </h3>
+        <button data-action="reset" class={ctrlBtnClass} type="button"
+          >Reset</button
+        >
+      </div>
+    </div>
+  </div>
+
+  <!-- Canvas -->
+  <div data-ref="canvas-area" class="relative min-w-0 flex-1">
+    <button
+      data-ref="toggle"
+      class="toggle-pill absolute top-3 left-3 z-40 flex cursor-pointer items-center gap-1.5 rounded-full bg-white/70 px-3 py-1.5 font-mono text-xs text-[var(--tree-ink-muted)] backdrop-blur-sm focus-visible:ring-2 focus-visible:ring-[var(--tree-focus)] focus-visible:ring-offset-2"
+      type="button"
+      aria-label="Open settings panel"
+      aria-expanded="false"
+    >
+      <span
+        class="toggle-dot inline-block h-1.5 w-1.5 rounded-full bg-[var(--tree-accent)]"
+        aria-hidden="true"></span>
+      <span data-ref="toggle-label">Grow</span>
+    </button>
+    <div
+      data-ref="canvas-container"
+      class="aspect-4/3 w-full overflow-hidden rounded-lg bg-[var(--tree-surface)] shadow-md"
+    >
+      <!-- <p
+        class="flex items-center justify-center p-20 font-mono text-xs tracking-wide text-stone-400"
+      >
+        Growing
+      </p> -->
+    </div>
+  </div>
+</div>
+
+<!-- Scoped styles for things Tailwind can't handle -->
+<style>
+  /* Scoped colour tokens */
+  .arboreal-breath {
+    --tree-ink: #1a1a1a;
+    --tree-ink-muted: #6b6b6b;
+    --tree-ink-faint: #9a9a9a;
+    --tree-surface: #fafafa;
+    --tree-surface-raised: #f0f0f0;
+    --tree-surface-hover: #e6e6e6;
+    --tree-border: #d9d9d9;
+    --tree-border-strong: #1a1a1a;
+    --tree-accent: #2d6a4f;
+    --tree-accent-hover: #1b4332;
+    --tree-focus: #1a1a1a;
+  }
+
+  /* Toggle pill */
+  .toggle-pill {
+    transition:
+      opacity 150ms ease,
+      background-color 150ms ease;
+    opacity: 0.8;
+  }
+  .toggle-pill:hover {
+    opacity: 1;
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+  .toggle-dot {
+    transition: transform 150ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  .toggle-pill:hover .toggle-dot {
+    transform: scale(1.3);
+  }
+
+  /*
+   * Panel enter/exit: only transform + opacity (GPU-only).
+   * Enter:  280ms ease-out-quint — fast start, gentle settle
+   * Exit:   220ms ease-in-quad — ~20% shorter, accelerates away
+   */
+  .panel {
+    transform: translateX(-100%);
+    opacity: 0;
+    pointer-events: none;
+    transition:
+      transform 280ms cubic-bezier(0.23, 1, 0.32, 1),
+      opacity 280ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  .panel.closing {
+    will-change: transform, opacity;
+    transition:
+      transform 220ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      opacity 180ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .panel.open {
+    transform: translateX(0);
+    opacity: 1;
+    pointer-events: auto;
+    will-change: transform, opacity;
+  }
+
+  /* Backdrop paired with panel timing */
+  [data-ref="backdrop"].open {
+    background-color: rgba(0, 0, 0, 0.08);
+    pointer-events: auto;
+    cursor: pointer;
+  }
+
+  /* Reduced motion: disable all animation */
+  @media (prefers-reduced-motion: reduce) {
+    .panel,
+    .toggle-pill,
+    .toggle-dot,
+    .ctrl-btn,
+    .param-slider::-webkit-slider-thumb,
+    [data-ref="backdrop"] {
+      transition: none;
+    }
+  }
+
+  /* Scrollbar */
+  .panel::-webkit-scrollbar {
+    width: 3px;
+  }
+  .panel::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .panel::-webkit-scrollbar-thumb {
+    background: var(--tree-border);
+    border-radius: 2px;
+  }
+
+  /* Range slider */
+  .param-slider {
+    flex: 1;
+    height: 2px;
+    background: var(--tree-border);
+    border-radius: 1px;
+    -webkit-appearance: none;
+  }
+  .param-slider:focus-visible {
+    outline: 2px solid var(--tree-focus);
+    outline-offset: 4px;
+    border-radius: 2px;
+  }
+  .param-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 12px;
+    height: 12px;
+    background: var(--tree-ink-muted);
+    border-radius: 50%;
+    cursor: pointer;
+    transition:
+      transform 100ms ease,
+      background-color 100ms ease;
+  }
+  .param-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    background: var(--tree-ink);
+  }
+  .param-slider::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    background: var(--tree-ink-muted);
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+  }
+
+  /* Canvas scaling */
+  [data-ref="canvas-container"] :global(canvas) {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+  }
+</style>
+
+<!-- p5.js sketch + all interactivity -->
+<script>
+  // @ts-nocheck
+
+  (() => {
+    // ── Scoped references ──
+    const root = document.querySelector(".arboreal-breath");
+    if (!root) return;
+
+    const seed = parseInt(root.dataset.seed || "847051", 10);
+    const showPanel = root.dataset.showPanel === "true";
+
+    const ref = (name) => root.querySelector(`[data-ref="${name}"]`);
+    const toggleBtn = ref("toggle");
+    const toggleLabel = ref("toggle-label");
+    const panelCloseBtn = ref("panel-close");
+    const sidebar = ref("sidebar");
+    const backdrop = ref("backdrop");
+    const canvasContainer = ref("canvas-container");
+    const canvasArea = ref("canvas-area");
+    const seedInput = ref("seed-input");
+
+    // ── Design resolution (constant, never changes) ──
+    const DESIGN_W = 1200;
+    const DESIGN_H = 900;
+
+    // ── Parameters ──
+    const params = {
+      seed: seed,
+      maxDepth: 9,
+      windStrength: 1.2,
+      swaySpeed: 1.5,
+      leafDensity: 3,
+      trunkWidth: 24,
+      branchSpread: 0.45,
+      colorPalette: ["#5c3d2e", "#4a7c3f", "#8fbc5a"],
+    };
+
+    const defaultParams = JSON.parse(JSON.stringify(params));
+
+    // ── Tree state ──
+    let branches = [];
+    let leaves = [];
+    let smoothWindX = 0;
+    let smoothWindY = 0;
+    let treeBaseX = DESIGN_W / 2;
+    let treeBaseY = DESIGN_H * 0.88;
+
+    // ── Hill layers ──
+    const hillLayers = [
+      {
+        baseY: 0.74,
+        amp: 35,
+        freq: 0.0015,
+        nOff: 0,
+        col: [155, 175, 140],
+        texDensity: 0,
+      },
+      {
+        baseY: 0.78,
+        amp: 30,
+        freq: 0.002,
+        nOff: 100,
+        col: [140, 162, 125],
+        texDensity: 0.02,
+      },
+      {
+        baseY: 0.82,
+        amp: 25,
+        freq: 0.003,
+        nOff: 200,
+        col: [125, 150, 108],
+        texDensity: 0.04,
+      },
+      {
+        baseY: 0.86,
+        amp: 20,
+        freq: 0.004,
+        nOff: 300,
+        col: [110, 140, 95],
+        texDensity: 0.07,
+      },
+      {
+        baseY: 0.9,
+        amp: 15,
+        freq: 0.005,
+        nOff: 400,
+        col: [95, 128, 80],
+        texDensity: 0.1,
+      },
+    ];
+
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    // ── p5.js instance mode ──
+    const sketch = (p) => {
+      const buildTree = () => {
+        p.randomSeed(params.seed);
+        p.noiseSeed(params.seed);
+        branches = [];
+        leaves = [];
+
+        let rndIdx = 0;
+        const rndValues = [];
+        for (let i = 0; i < 5000; i++) rndValues.push(p.random(-1, 1));
+        const rnd = () => rndValues[rndIdx++ % rndValues.length];
+
+        const generateBranch = (
+          x,
+          y,
+          angle,
+          length,
+          thickness,
+          depth,
+          parentIndex,
+        ) => {
+          if (depth > params.maxDepth || length < 4) return;
+
+          const branch = {
+            x,
+            y,
+            angle,
+            length,
+            thickness,
+            depth,
+            parentIndex,
+            angleOffset: 0,
+            noisePhase: rnd() * 1000,
+            dampingFactor: Math.pow(0.65, depth),
+            windSensitivity: Math.pow(1.35, depth) * 0.008,
+          };
+
+          const idx = branches.length;
+          branches.push(branch);
+
+          const ex = x + p.cos(angle) * length;
+          const ey = y + p.sin(angle) * length;
+
+          if (depth >= params.maxDepth - 2) {
+            const leafCount =
+              depth >= params.maxDepth - 1
+                ? params.leafDensity
+                : Math.ceil(params.leafDensity / 2);
+            for (let lf = 0; lf < leafCount; lf++) {
+              leaves.push({
+                branchIndex: idx,
+                t: 0.5 + rnd() * 0.5,
+                size: 4 + rnd() * 6,
+                angleJitter: rnd() * 0.5,
+                noisePhase: rnd() * 1000,
+                depth,
+              });
+            }
+          }
+
+          if (depth < params.maxDepth) {
+            let numChildren = depth < 2 ? 2 : rnd() > 0.3 ? 2 : 3;
+            if (depth === 0) numChildren = 3;
+
+            const shrinkFactor = 0.62 + rnd() * 0.12;
+            const thicknessShrink = 0.6 + rnd() * 0.1;
+
+            for (let c = 0; c < numChildren; c++) {
+              const spread = params.branchSpread;
+              let childAngle;
+              if (numChildren === 2) {
+                childAngle =
+                  angle + (c === 0 ? -spread : spread) + rnd() * 0.15;
+              } else {
+                childAngle = angle + (c - 1) * spread + rnd() * 0.12;
+              }
+              generateBranch(
+                ex,
+                ey,
+                childAngle,
+                length * (shrinkFactor + rnd() * 0.08),
+                Math.max(1, thickness * thicknessShrink),
+                depth + 1,
+                idx,
+              );
+            }
+          }
+        };
+
+        const trunkLength = DESIGN_H * 0.18 + rnd() * DESIGN_H * 0.04;
+        generateBranch(
+          treeBaseX,
+          treeBaseY,
+          -p.PI / 2,
+          trunkLength,
+          params.trunkWidth,
+          0,
+          -1,
+        );
+      };
+
+      const hexToColor = (hex) => ({
+        r: parseInt(hex.slice(1, 3), 16),
+        g: parseInt(hex.slice(3, 5), 16),
+        b: parseInt(hex.slice(5, 7), 16),
+      });
+
+      const lerpColor3 = (c1, c2, t) => ({
+        r: c1.r + (c2.r - c1.r) * t,
+        g: c1.g + (c2.g - c1.g) * t,
+        b: c1.b + (c2.b - c1.b) * t,
+      });
+
+      // ── Cached background (sky + hills — static per seed) ──
+      let bgBuffer = null;
+
+      const renderBackground = () => {
+        if (bgBuffer) bgBuffer.remove();
+        bgBuffer = p.createGraphics(DESIGN_W, DESIGN_H);
+
+        // Sky gradient
+        for (let i = 0; i < DESIGN_H; i++) {
+          const t = i / DESIGN_H;
+          bgBuffer.stroke(
+            p.lerp(200, 210, t),
+            p.lerp(215, 195, t),
+            p.lerp(235, 175, t),
+          );
+          bgBuffer.line(0, i, DESIGN_W, i);
+        }
+
+        // Hills
+        const savedSeed = params.seed;
+        for (let li = 0; li < hillLayers.length; li++) {
+          const layer = hillLayers[li];
+          const baseY = DESIGN_H * layer.baseY;
+          const c = layer.col;
+
+          bgBuffer.noStroke();
+          bgBuffer.fill(c[0], c[1], c[2]);
+          bgBuffer.beginShape();
+          bgBuffer.vertex(0, DESIGN_H);
+          for (let x = 0; x <= DESIGN_W; x += 3) {
+            const n = p.noise(
+              (x + layer.nOff) * layer.freq,
+              savedSeed * 0.01 + li,
+            );
+            bgBuffer.vertex(x, baseY - n * layer.amp * 2 + layer.amp);
+          }
+          bgBuffer.vertex(DESIGN_W, DESIGN_H);
+          bgBuffer.endShape(p.CLOSE);
+
+          if (layer.texDensity > 0) {
+            const dotCount = Math.floor(DESIGN_W * layer.texDensity);
+            for (let d = 0; d < dotCount; d++) {
+              const dx = p.noise(d * 0.3 + layer.nOff) * DESIGN_W;
+              const hillY =
+                baseY -
+                p.noise((dx + layer.nOff) * layer.freq, savedSeed * 0.01 + li) *
+                  layer.amp *
+                  2 +
+                layer.amp;
+              const dy =
+                hillY +
+                p.noise(d * 0.7 + layer.nOff) * (DESIGN_H - hillY) * 0.6;
+              const shade = p.noise(d * 1.1 + layer.nOff + 500);
+              bgBuffer.fill(
+                c[0] + (shade - 0.5) * 30,
+                c[1] + (shade - 0.5) * 30,
+                c[2] + (shade - 0.5) * 30,
+                60 + shade * 60,
+              );
+              bgBuffer.ellipse(
+                dx,
+                dy,
+                2 + p.noise(d * 0.5) * 4,
+                (2 + p.noise(d * 0.5) * 4) * 0.6,
+              );
+            }
+          }
+        }
+      };
+
+      // ── Pre-compute parent chain for each branch (avoids while-loop per frame) ──
+      let parentChains = [];
+
+      const buildParentChains = () => {
+        parentChains = new Array(branches.length);
+        for (let i = 0; i < branches.length; i++) {
+          const chain = [];
+          let pIdx = branches[i].parentIndex;
+          while (pIdx >= 0) {
+            chain.push(pIdx);
+            pIdx = branches[pIdx].parentIndex;
+          }
+          parentChains[i] = chain;
+        }
+      };
+
+      // ── Cached color values ──
+      let cachedBarkCol, cachedCanopyCol, cachedHighlightCol;
+      let cachedBranchColors = [];
+
+      const cacheColors = () => {
+        cachedBarkCol = hexToColor(params.colorPalette[0]);
+        cachedCanopyCol = hexToColor(params.colorPalette[1]);
+        cachedHighlightCol = hexToColor(params.colorPalette[2]);
+
+        cachedBranchColors = new Array(branches.length);
+        for (let i = 0; i < branches.length; i++) {
+          const depthRatio = branches[i].depth / params.maxDepth;
+          cachedBranchColors[i] =
+            depthRatio < 0.5
+              ? cachedBarkCol
+              : lerpColor3(
+                  cachedBarkCol,
+                  cachedCanopyCol,
+                  (depthRatio - 0.5) * 2 * 0.4,
+                );
+        }
+      };
+
+      // ── Cached container rect (updated on resize, not every frame) ──
+      let cachedRect = null;
+
+      const updateCachedRect = () => {
+        cachedRect = canvasContainer.getBoundingClientRect();
+      };
+
+      // ── p5 lifecycle ──
+
+      p.setup = () => {
+        const canvas = p.createCanvas(DESIGN_W, DESIGN_H);
+        canvas.parent(canvasContainer);
+        p.pixelDensity(1);
+        buildTree();
+        buildParentChains();
+        cacheColors();
+        renderBackground();
+        updateCachedRect();
+        const loading = canvasContainer.querySelector("p");
+        if (loading) loading.style.display = "none";
+        if (prefersReducedMotion) {
+          p.draw();
+          p.noLoop();
+        }
+      };
+
+      p.windowResized = () => {
+        updateCachedRect();
+      };
+
+      p.draw = () => {
+        // Blit cached background (sky + hills) in one call
+        p.image(bgBuffer, 0, 0);
+
+        // Wind from mouse (use cached rect)
+        const scaleX = DESIGN_W / cachedRect.width;
+        const scaleY = DESIGN_H / cachedRect.height;
+        const mx = ((p.mouseX * scaleX) / DESIGN_W - 0.5) * 2;
+        const my = ((p.mouseY * scaleY) / DESIGN_H - 0.5) * 2;
+
+        smoothWindX += (mx * params.windStrength - smoothWindX) * 0.04;
+        smoothWindY += (my * params.windStrength - smoothWindY) * 0.02;
+
+        const time = p.frameCount * 0.01 * params.swaySpeed;
+
+        // Dynamic angles
+        for (let i = 0; i < branches.length; i++) {
+          const b = branches[i];
+          let naturalSway = p.noise(b.noisePhase + time * 0.3) * 2 - 1;
+          naturalSway *= 0.03 * (1 - b.dampingFactor);
+          b.angleOffset =
+            naturalSway +
+            smoothWindX * b.windSensitivity +
+            smoothWindY * b.windSensitivity * 0.3 +
+            Math.sin(time * 1.5 - b.depth * 0.4) * 0.015 * (b.depth + 1);
+        }
+
+        // World positions (use pre-computed parent chains)
+        const worldPositions = new Array(branches.length);
+        for (let i = 0; i < branches.length; i++) {
+          const b = branches[i];
+          let baseX, baseY;
+          if (b.parentIndex === -1) {
+            baseX = b.x;
+            baseY = b.y;
+          } else {
+            baseX = worldPositions[b.parentIndex].ex;
+            baseY = worldPositions[b.parentIndex].ey;
+          }
+
+          let effectiveAngle = b.angle + b.angleOffset;
+          const chain = parentChains[i];
+          for (let j = 0; j < chain.length; j++) {
+            effectiveAngle += branches[chain[j]].angleOffset * 0.5;
+          }
+
+          const cosA = Math.cos(effectiveAngle);
+          const sinA = Math.sin(effectiveAngle);
+          worldPositions[i] = {
+            bx: baseX,
+            by: baseY,
+            ex: baseX + cosA * b.length,
+            ey: baseY + sinA * b.length,
+            angle: effectiveAngle,
+          };
+        }
+
+        // Branches (use cached colors)
+        for (let i = 0; i < branches.length; i++) {
+          const b = branches[i];
+          const wp = worldPositions[i];
+          const bc = cachedBranchColors[i];
+          p.stroke(bc.r, bc.g, bc.b);
+          p.strokeWeight(Math.max(1, b.thickness));
+          p.strokeCap(p.ROUND);
+          p.line(wp.bx, wp.by, wp.ex, wp.ey);
+        }
+
+        // Leaves
+        p.noStroke();
+        const windMag = Math.sqrt(
+          smoothWindX * smoothWindX + smoothWindY * smoothWindY,
+        );
+        const leafAlpha = 180 - windMag * 40; // pre-compute once instead of p.map per leaf
+        for (let i = 0; i < leaves.length; i++) {
+          const lf = leaves[i];
+          const wp = worldPositions[lf.branchIndex];
+          if (!wp) continue;
+
+          const lx = wp.bx + (wp.ex - wp.bx) * lf.t;
+          const ly = wp.by + (wp.ey - wp.by) * lf.t;
+          const flutter =
+            Math.sin(time * 3 + lf.noisePhase) * 0.3 + smoothWindX * 0.5;
+          const leafAngle = wp.angle + flutter + lf.angleJitter;
+          const sizeModX = lf.size * (1.0 + windMag * 0.2);
+          const sizeModY = lf.size * (0.5 + windMag * 0.15);
+          const leafT = p.noise(lf.noisePhase + time * 0.2);
+          const lc = lerpColor3(cachedCanopyCol, cachedHighlightCol, leafT);
+
+          p.push();
+          p.translate(lx, ly);
+          p.rotate(leafAngle);
+          p.fill(lc.r, lc.g, lc.b, leafAlpha);
+          p.ellipse(0, 0, sizeModX, sizeModY);
+          p.pop();
+        }
+      };
+
+      // Expose rebuild for UI controls
+      p.rebuildTree = () => {
+        buildTree();
+        buildParentChains();
+        cacheColors();
+        renderBackground();
+        if (prefersReducedMotion) p.redraw();
+      };
+    };
+
+    // ── Lazy-load p5 when canvas is near viewport ──
+    let p5Instance = null;
+
+    const observer = new IntersectionObserver(
+      async (entries) => {
+        if (entries[0].isIntersecting) {
+          observer.disconnect();
+          const { default: p5 } = await import("p5");
+          p5Instance = new p5(sketch);
+        }
+      },
+      { rootMargin: "200px" },
+    );
+    observer.observe(root);
+
+    // ── Panel toggle ──
+    let isOpen = false;
+
+    const FOCUSABLE = 'button, input, [href], [tabindex]:not([tabindex="-1"])';
+
+    const trapFocus = (e) => {
+      if (e.key !== "Tab" || !isOpen) return;
+      const focusable = [...sidebar.querySelectorAll(FOCUSABLE)];
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+
+    const openPanel = () => {
+      isOpen = true;
+      sidebar.classList.remove("closing");
+      sidebar.classList.add("open");
+      backdrop.classList.add("open");
+      toggleLabel.textContent = "Done";
+      toggleBtn.setAttribute("aria-label", "Close settings panel");
+      toggleBtn.setAttribute("aria-expanded", "true");
+      canvasArea.inert = true;
+      panelCloseBtn.focus();
+    };
+
+    const closePanel = () => {
+      if (!isOpen) return;
+      isOpen = false;
+      sidebar.classList.add("closing");
+      sidebar.classList.remove("open");
+      backdrop.classList.remove("open");
+      toggleLabel.textContent = "Grow";
+      toggleBtn.setAttribute("aria-label", "Open settings panel");
+      toggleBtn.setAttribute("aria-expanded", "false");
+      canvasArea.inert = false;
+      toggleBtn.focus();
+
+      const handler = () => {
+        sidebar.classList.remove("closing");
+        sidebar.removeEventListener("transitionend", handler);
+      };
+      sidebar.addEventListener("transitionend", handler);
+    };
+
+    if (showPanel) openPanel();
+
+    toggleBtn.addEventListener("click", () => {
+      isOpen ? closePanel() : openPanel();
+    });
+
+    panelCloseBtn.addEventListener("click", closePanel);
+    backdrop.addEventListener("click", closePanel);
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && isOpen) closePanel();
+      trapFocus(e);
+    });
+
+    // ── Seed controls ──
+    const updateSeedDisplay = () => {
+      seedInput.value = params.seed;
+    };
+
+    seedInput.addEventListener("change", () => {
+      const val = parseInt(seedInput.value);
+      if (val && val > 0) {
+        params.seed = val;
+        p5Instance?.rebuildTree();
+      } else updateSeedDisplay();
+    });
+
+    const seedActions = {
+      "prev-seed": () => Math.max(1, params.seed - 1),
+      "next-seed": () => params.seed + 1,
+      "random-seed": () => Math.floor(Math.random() * 999999) + 1,
+    };
+    Object.entries(seedActions).forEach(([action, calcSeed]) => {
+      root
+        .querySelector(`[data-action="${action}"]`)
+        .addEventListener("click", () => {
+          params.seed = calcSeed();
+          updateSeedDisplay();
+          p5Instance?.rebuildTree();
+        });
+    });
+
+    // ── Parameter sliders ──
+    const intParams = new Set(["maxDepth", "leafDensity", "trunkWidth"]);
+    const structuralParams = new Set([
+      "maxDepth",
+      "leafDensity",
+      "trunkWidth",
+      "branchSpread",
+    ]);
+
+    root.querySelectorAll("[data-param]").forEach((slider) => {
+      slider.addEventListener("input", () => {
+        const name = slider.dataset.param;
+        const val = intParams.has(name)
+          ? parseInt(slider.value)
+          : parseFloat(slider.value);
+        params[name] = val;
+        root.querySelector(`[data-display="${name}"]`).textContent =
+          slider.value;
+        if (structuralParams.has(name)) p5Instance?.rebuildTree();
+      });
+    });
+
+    // ── Colour pickers ──
+    root.querySelectorAll("[data-colour]").forEach((picker) => {
+      picker.addEventListener("change", () => {
+        const idx = parseInt(picker.dataset.colour);
+        params.colorPalette[idx] = picker.value;
+        root.querySelector(`[data-colour-display="${idx}"]`).textContent =
+          picker.value;
+        p5Instance?.rebuildTree();
+      });
+    });
+
+    // ── Reset ──
+    root
+      .querySelector('[data-action="reset"]')
+      .addEventListener("click", () => {
+        Object.assign(params, JSON.parse(JSON.stringify(defaultParams)));
+        updateSeedDisplay();
+
+        root.querySelectorAll("[data-param]").forEach((slider) => {
+          slider.value = params[slider.dataset.param];
+          root.querySelector(
+            `[data-display="${slider.dataset.param}"]`,
+          ).textContent = String(params[slider.dataset.param]);
+        });
+
+        root.querySelectorAll("[data-colour]").forEach((picker) => {
+          const idx = parseInt(picker.dataset.colour);
+          picker.value = params.colorPalette[idx];
+          root.querySelector(`[data-colour-display="${idx}"]`).textContent =
+            params.colorPalette[idx];
+        });
+
+        p5Instance?.rebuildTree();
+      });
+  })();
+</script>
