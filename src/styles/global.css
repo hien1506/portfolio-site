@@ -30,15 +30,30 @@ body {
   background-color: var(--color-background);
 }
 
-.prose a {
-  text-decoration: underline;
-  text-decoration-color: color-mix(in srgb, currentColor 20%);
-  text-underline-offset: 4px;
-  transition: text-decoration-color 150ms ease;
+/* styles for markdown */
+.prose h2 {
+  @apply text-lg font-medium mt-8 mb-4;
 }
 
-.prose a:hover {
-  text-decoration-color: var(--color-primary);
+.prose p {
+  @apply text-sm leading-relaxed text-text text-pretty;
+}
+
+.prose ul {
+  @apply list-disc list-inside;
+}
+.prose ol {
+  @apply list-decimal list-inside;
+}
+.prose li {
+  @apply text-sm leading-relaxed text-text text-pretty;
+}
+.prose li::marker {
+  @apply text-sm leading-relaxed text-text text-pretty;
+}
+
+.prose a {
+  @apply text-sm underline decoration-text/20 underline-offset-5 transition-[text-decoration-color] duration-150 hover:decoration-text active:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-text motion-reduce:transition-none;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -31,7 +31,7 @@ const { Content } = await render(entry);
     >
       &larr; All projects
     </a>
-    <h1 class="text-2xl font-medium leading-tight text-pretty">
+    <h1 class="text-xl font-medium leading-tight text-pretty">
       {entry.data.title}
     </h1>
     <p class="mt-2 text-sm leading-relaxed">
@@ -45,7 +45,7 @@ const { Content } = await render(entry);
       )
     }
     <hr class="my-8 border-neutral-200" />
-    <div class="prose prose-sm">
+    <div class="prose">
       <Content />
     </div>
   </article>
