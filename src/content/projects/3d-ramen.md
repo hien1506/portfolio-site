@@ -2,7 +2,7 @@
 title: 3D Ramen Bowl
 description: A 3D ramen bowl modeled in Blender.
 category: experiment
-model: /models/ramen.glb
+model: /models/ramen-v2.glb
 publishedAt: 2026-04-10
 draft: false
 image: /images/projects/3d-ramen.webp
