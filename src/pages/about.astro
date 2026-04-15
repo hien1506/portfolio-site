@@ -44,9 +44,9 @@ import { recommendations, paletteColor } from "../data/recommendations";
       </div>
       <div>
         <h2
-          class="mb-4 text-xs font-medium uppercase tracking-widest text-text text-pretty"
+          class="mb-4 text-sm font-medium uppercase tracking-widest text-text text-pretty"
         >
-          Recommending
+          Recommending:
         </h2>
         {
           recommendations.length === 0 ? (
@@ -54,45 +54,22 @@ import { recommendations, paletteColor } from "../data/recommendations";
           ) : (
             <ul role="list" class="flex list-none flex-col p-0">
               {recommendations.map((rec, i) => (
-                <li
-                  class:list={[
-                    i !== recommendations.length - 1 &&
-                      "border-b border-primary/8",
-                  ]}
-                >
+                <li>
                   <a
                     href={rec.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    class:list={[
-                      "grid grid-cols-[8rem_1fr] items-stretch gap-4 no-underline text-inherit transition-[background-color] duration-150 ease hover:bg-black/3 active:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary rounded-sm motion-reduce:transition-none",
-                      i === 0 && "pt-0",
-                    ]}
+                    class="group flex gap-4 no-underline text-inherit focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-text motion-reduce:transition-none border-y border-primary/8 hover:border-text active:opacity-60 transition-[border-color] duration-200 ease -mb-px"
                   >
-                    {rec.image ? (
-                      <img
-                        src={rec.image}
-                        alt=""
-                        class="w-full aspect-square object-cover"
-                        loading="lazy"
-                      />
-                    ) : (
-                      <div
-                        class="w-full aspect-square"
-                        style={`background-color: ${paletteColor(i)}`}
-                        aria-hidden="true"
-                      />
-                    )}
-                    <div class="flex min-w-0 flex-col gap-2 py-4">
-                      <h3 class="text-base font-medium leading-tight text-pretty">
-                        {rec.title}
-                      </h3>
-                      <p class="line-clamp-2 text-sm leading-relaxed">
-                        {rec.description}
-                      </p>
-                      <span class="mt-1 text-xs text-faint">
-                        [{rec.category}]
-                      </span>
+                    <div class="flex flex-col gap-1 w-full py-3">
+                      <div class="flex items-center justify-between w-full">
+                        <h3 class="text-sm font-medium leading-tight text-pretty">
+                          {rec.title}
+                        </h3>
+                        <span class="text-[10px] text-faint uppercase tracking-widest font-medium">
+                          {rec.category}
+                        </span>
+                      </div>
                     </div>
                   </a>
                 </li>
