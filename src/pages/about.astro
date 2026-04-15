@@ -6,20 +6,22 @@ import { recommendations, paletteColor } from "../data/recommendations";
 <Layout title="About">
   <article class="px-4 pt-0 pb-16">
     <div
-      class="grid grid-cols-1 gap-12 md:gap-16 border-t border-dotted border-primary/25 pt-8 md:pt-12 md:grid-cols-2"
+      class="border-t border-dotted border-primary/25 pt-8 md:pt-12"
     >
-      <div>
-        <div class="flex max-w-prose flex-col gap-6">
-          <p class="text-sm leading-relaxed text-text">
-            Frontend developer from Melbourne, Australia. I am a curious person
-            who loves trying new things and am currently learning creative web
-            technologies like p5.js and three.js.
-          </p>
-          <p class="text-sm leading-relaxed text-text">
-            Most of the work here is an attempt to make digital spaces that are
-            a little more playful.
-          </p>
-          <figure class="profile-wrap mt-2 w-full overflow-hidden">
+      <div class="flex max-w-prose flex-col gap-6">
+        <p class="text-sm leading-relaxed text-text">
+          Frontend developer from Melbourne, Australia. I am a curious person
+          who loves trying new things and am currently learning creative web
+          technologies like p5.js and three.js.
+        </p>
+        <p class="text-sm leading-relaxed text-text">
+          Most of the work here is an attempt to make digital spaces that are
+          a little more playful.
+        </p>
+      </div>
+      <div class="grid grid-cols-1 gap-12 md:gap-16 md:grid-cols-2 mt-8 md:mt-12">
+        <div>
+          <figure class="profile-wrap w-full overflow-hidden">
             <img
               src="/images/profile-picture.webp"
               alt="A photo of Hien Nguyen taken in a cafe in Tokyo, Japan"
@@ -32,7 +34,7 @@ import { recommendations, paletteColor } from "../data/recommendations";
               Taken in Tokyo, Japan
             </figcaption>
           </figure>
-          <p class="text-sm leading-relaxed text-text">
+          <p class="mt-6 text-sm leading-relaxed text-text max-w-prose">
             I enjoy photography, spending time in movie theaters and am a
             volunteer at the <a
               class="underline decoration-text/20 underline-offset-[3px] transition-[text-decoration-color] duration-150 ease hover:decoration-text active:opacity-70 motion-reduce:transition-none"
@@ -41,8 +43,7 @@ import { recommendations, paletteColor } from "../data/recommendations";
             >. If my work resonates with you, please reach out.
           </p>
         </div>
-      </div>
-      <div>
+        <div>
         <h2
           class="mb-4 text-sm font-medium uppercase tracking-widest text-text text-pretty"
         >
@@ -78,6 +79,7 @@ import { recommendations, paletteColor } from "../data/recommendations";
           )
         }
       </div>
+    </div>
     </div>
   </article>
 </Layout>
