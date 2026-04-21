@@ -8,31 +8,31 @@ Frontend developer&nbsp;· [hiennguyen1529@gmail.com](mailto:hiennguyen1529@gmai
 
 _May 2025 – Present · Melbourne, Australia_
 
-- On track to deliver $40M in annualised revenue uplift for FY26, leading experimentation and personalisation across Officeworks' micro-frontend ecosystem including the Print & Create platform.
-- Built internal AI workflows, agents, and tools using Claude Code skills and custom agents in Microsoft Copilot, accelerating experiment delivery and content production for the eCommerce team.
-- Adobe Target SME setting standards for experiment delivery, front-end security (XSS, CSRF), and WCAG 2.1 AA accessibility, and representing eCommerce in architecture forums shaping Target integration at scale.
-- Mentor front-end developers and CRO peers through pairing, code reviews, and internal workshops on experimentation best practice.
+- Lead and own end-to-end delivery of experimentation and personalisation across Officeworks' website. On track to deliver $40M in annualised revenue uplift for FY26.
+- Built internal AI workflows and agents using Claude Code and Microsoft Copilot, speeding up experiment delivery and content production for the eCommerce team.
+- Adobe Target SME. Set standards around experiment delivery, front-end security (XSS, CSRF), and WCAG 2.1 AA accessibility, and represent eCommerce in architecture forums on Target integration.
+- Mentor front-end developers and CRO peers through pair programming, code review, and internal workshops on experimentation.
 
 ### Front-End Developer — Officeworks
 
-_November 2021 – May 2025 · Melbourne, Australia_
+_Nov 2021 – May 2025 · Melbourne, Australia_
 
-- Delivered $32M in measurable revenue uplift across 30+ experiments spanning checkout, PDP, search, and homepage journeys.
-- Built and shipped production front-end experiences in React, HTML, CSS, and JavaScript, grounded in analytics and user research.
-- Established repeatable QA and testing workflows that became the team standard for CRO delivery.
-- Mentored junior and graduate developers through pair programming and structured learning sessions.
+- Delivered $32M in revenue uplift across 30+ experiments covering checkout, PDP, search, and homepage.
+- Shipped production front-end work in React, HTML, CSS, and JavaScript, informed by analytics and user research.
+- Set up QA and testing workflows that became the team standard for CRO delivery.
+- Mentored junior and graduate developers through pair programming and learning sessions.
 
 ### Web Developer — Prime Creative Media
 
-_February 2020 – November 2021 · Melbourne, Australia_
+_Feb 2020 – Nov 2021 · Melbourne, Australia_
 
 - Developed and maintained WordPress sites in PHP, JavaScript, and AWS for B2B media clients, with a focus on performance and accessibility.
 
 ### Junior Developer — Convo Technologies
 
-_September 2019 – February 2020 · Melbourne, Australia_
+_Sep 2019 – Feb 2020 · Melbourne, Australia_
 
-- Developed front-end features for a messenger platform in JavaScript, Node.js, and Firebase during the product's early build phase.
+- Built front-end features for an early-stage messenger platform in JavaScript, Node.js, and Firebase.
 
 ## Education
 
@@ -46,4 +46,8 @@ _2013 – 2014 · Melbourne_
 
 ## Skills
 
-TypeScript · JavaScript · React · Astro · Node · HTML · CSS · Git · Figma · Vite
+**Languages & Frameworks** — TypeScript · JavaScript · React · Astro · Node · HTML · CSS<br>
+**Experimentation & Personalisation** — Adobe Target · A/B Testing · CRO<br>
+**Quality & Accessibility** — Playwright · WCAG 2.1 AA · Front-end Security (XSS, CSRF)<br>
+**AI Tooling** — Claude Code · MCP · Microsoft Copilot<br>
+**Tools** — Git · Figma · Vite
