@@ -66,3 +66,65 @@ body {
     scroll-behavior: auto !important;
   }
 }
+
+/* resume page — tighter typography, scoped so default .prose is unaffected */
+.resume {
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+.resume h1 {
+  @apply text-xl font-medium leading-tight mb-1;
+}
+.resume h1 + p {
+  @apply text-xs text-muted mt-0 mb-0;
+}
+.resume h2 {
+  @apply text-xs uppercase tracking-wider text-muted mt-4 mb-1;
+}
+.resume h3 {
+  @apply text-sm font-medium mt-3 mb-0;
+}
+.resume h3 + p {
+  @apply text-xs text-muted italic mt-0 mb-1;
+}
+.resume p,
+.resume li {
+  @apply text-sm leading-tight;
+}
+.resume ul {
+  @apply list-disc pl-4 my-0.5;
+  list-style-position: outside;
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 14mm 16mm;
+  }
+  nav,
+  footer {
+    display: none !important;
+  }
+  html,
+  body {
+    background: #fff;
+  }
+  .resume {
+    max-width: none;
+    padding: 0;
+    margin: 0;
+    font-size: 10.25pt;
+    color: #000;
+  }
+  .resume a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .resume h2 {
+    break-after: avoid;
+  }
+  .resume h3,
+  .resume li {
+    break-inside: avoid;
+  }
+}
