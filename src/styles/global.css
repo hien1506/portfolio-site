@@ -78,6 +78,9 @@ body {
 .resume h1 + p {
   @apply text-xs text-muted mt-0 mb-0;
 }
+.resume .hero-location {
+  @apply text-sm text-text;
+}
 .resume h2 {
   @apply text-xs uppercase tracking-wider text-muted mt-4 mb-1;
 }

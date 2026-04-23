@@ -1,6 +1,11 @@
 # Hien Nguyen
 
-Frontend developer&nbsp;· [hiennguyen1529@gmail.com](mailto:hiennguyen1529@gmail.com)&nbsp;· [hien-nguyen.site](https://hien-nguyen.site)&nbsp;· [github](https://github.com/)&nbsp;· [linkedin](https://linkedin.com/in/)
+Melbourne, Australia&nbsp;· Open to hybrid and remote<br>
+0466 363 548 &nbsp;· [hiennguyen1529@gmail.com](mailto:hiennguyen1529@gmail.com)&nbsp;· [hien-nguyen.site](https://hien-nguyen.site/)&nbsp;· [github](https://github.com/hien1506)&nbsp;· [linkedin](https://www.linkedin.com/in/hien-nguyen06)
+
+## Summary
+
+Lead Front-End Developer specialising in experimentation and personalisation for eCommerce. I build the tools, workflows, and standards that help teams ship better experiences faster.
 
 ## Experience
 
@@ -11,7 +16,7 @@ _May 2025 – Present · Melbourne, Australia_
 - Lead and own end-to-end delivery of experimentation and personalisation across Officeworks' website. On track to deliver $40M in annualised revenue uplift for FY26.
 - Built internal AI workflows and agents using Claude Code and Microsoft Copilot, speeding up experiment delivery and content production for the eCommerce team.
 - Adobe Target SME. Set standards around experiment delivery, front-end security (XSS, CSRF), and WCAG 2.1 AA accessibility, and represent eCommerce in architecture forums on Target integration.
-- Mentor front-end developers and CRO peers through pair programming, code review, and internal workshops on experimentation.
+- Guide two experimentation specialists and mentor front-end developers across the eCommerce team through pair programming, code review, and internal workshops on experimentation.
 
 ### Front-End Developer — Officeworks
 
@@ -26,28 +31,31 @@ _Nov 2021 – May 2025 · Melbourne, Australia_
 
 _Feb 2020 – Nov 2021 · Melbourne, Australia_
 
-- Developed and maintained WordPress sites in PHP, JavaScript, and AWS for B2B media clients, with a focus on performance and accessibility.
+- Built and maintained WordPress sites in PHP, JavaScript, and AWS for B2B media clients, with a focus on performance and accessibility.
+- Created responsive HTML and CSS emails and landing pages for CRM campaigns.
+- Drove ~$250K/month in ad revenue through HTML5 ad placements across Google Ads.
 
 ### Junior Developer — Convo Technologies
 
 _Sep 2019 – Feb 2020 · Melbourne, Australia_
 
 - Built front-end features for an early-stage messenger platform in JavaScript, Node.js, and Firebase.
+- Created a lightweight design system in Figma to standardise UI across the product.
 
 ## Education
 
 ### Full Stack Development — Le Wagon
 
-_2019_
+_2019_ · Melbourne, Australia
 
 ### Bachelor of Business (International Business) — RMIT University
 
-_2013 – 2014 · Melbourne_
+_2013 – 2014 · Melbourne, Australia_
 
 ## Skills
 
-**Languages & Frameworks** — TypeScript · JavaScript · React · Astro · Node · HTML · CSS<br>
-**Experimentation & Personalisation** — Adobe Target · A/B Testing · CRO<br>
-**Quality & Accessibility** — Playwright · WCAG 2.1 AA · Front-end Security (XSS, CSRF)<br>
-**AI Tooling** — Claude Code · MCP · Microsoft Copilot<br>
-**Tools** — Git · Figma · Vite
+**Technical Skills**: TypeScript, JavaScript, React, Astro, Next.js, Node, HTML, CSS, Tailwind CSS, Playwright, WCAG 2.1 AA, Front-end Security (XSS, CSRF)<br>
+**Design Skills**: Figma, UX Research, UI Design<br>
+**Experimentation & Personalisation**: Adobe Target, Adobe Analytics, Adobe Launch, A/B Testing<br>
+**Leadership**: Mentorship, Technical Leadership, Stakeholder Management, Knowledge Sharing<br>
+**AI Tooling**: Claude Code, Agent skills and MCP<br>
