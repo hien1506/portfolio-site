@@ -8,10 +8,13 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
+    "preview": "bun run build && wrangler dev",
+    "astro": "astro",
+    "generate-types": "wrangler types",
+    "deploy": "bun run build && wrangler deploy"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "^13.3.1",
     "@astrojs/mdx": "^5.0.3",
     "@fontsource/ibm-plex-mono": "^5.2.7",
     "@tailwindcss/vite": "^4.2.2",
@@ -23,9 +26,13 @@
   },
   "private": true,
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "wrangler": "^4.88.0"
   },
   "peerDependencies": {
     "typescript": "^5"
+  },
+  "overrides": {
+    "vite": "^7"
   }
 }
