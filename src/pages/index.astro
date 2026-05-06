@@ -1,7 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import Layout from "../layouts/Layout.astro";
-import Hero from "../components/Hero.astro";
+import SketchpadHero from "../components/SketchpadHero.astro";
 import ProjectFilter from "../components/ProjectFilter.astro";
 import ProjectGrid from "../components/ProjectGrid.astro";
 
@@ -26,9 +26,9 @@ const counts = {
 ---
 
 <Layout>
-  <Hero />
+  <SketchpadHero />
 
-  <div id="projects" class="px-4 pb-16">
+  <div class="px-4 pb-16">
     <ProjectFilter counts={counts} />
     <ProjectGrid projects={projects} />
   </div>
