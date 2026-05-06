@@ -5,7 +5,7 @@ Melbourne, Australia&nbsp;· Open to hybrid and remote<br>
 
 ## Summary
 
-Lead Front-End Developer specialising in experimentation and personalisation for eCommerce. I build the tools, workflows, and standards that help teams ship better experiences faster.
+Lead Front-End Developer specialising in experimentation and personalisation.
 
 ## Experience
 
