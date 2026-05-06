@@ -1,90 +1,163 @@
 ---
 type Category = "project" | "writing" | "experiment";
+type FilterValue = "all" | Category;
 
 interface FilterOption {
   label: string;
-  value: "all" | Category;
+  value: FilterValue;
 }
+
+interface Props {
+  counts?: Partial<Record<FilterValue, number>>;
+}
+
+const { counts = {} } = Astro.props;
 
 const filters: FilterOption[] = [
   { label: "All", value: "all" },
-  { label: "Project", value: "project" },
+  { label: "Projects", value: "project" },
   { label: "Writing", value: "writing" },
-  { label: "Experiment", value: "experiment" },
+  { label: "Experiments", value: "experiment" },
 ];
+
+const totalCount = counts.all ?? 0;
 ---
 
-<nav aria-label="Project filters" class="mb-8">
-  <div class="flex flex-col gap-2">
-    <h2 class="text-xs font-medium uppercase tracking-widest text-pretty">Projects</h2>
-    <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
-      {
-        filters.map((filter) => (
+<section aria-label="Projects" class="mb-8">
+  <p class="sr-only" aria-live="polite" aria-atomic="true">
+    <span data-filter-count>{totalCount}</span> items shown
+  </p>
+
+  <div
+    role="radiogroup"
+    aria-label="Filter projects by category"
+    class="flex flex-wrap items-center gap-2"
+  >
+    {
+      filters.map((filter) => {
+        const count = counts[filter.value] ?? 0;
+        const isActive = filter.value === "all";
+        return (
           <button
             type="button"
-            class="filter-btn text-sm uppercase tracking-widest transition-colors duration-150 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            class="filter-pill inline-flex min-h-10 items-center gap-2.5 rounded-full px-4 py-2 text-xs uppercase tracking-widest"
             data-filter={filter.value}
-            aria-pressed={filter.value === "all" ? "true" : "false"}
+            role="radio"
+            aria-checked={isActive ? "true" : "false"}
+            tabindex={isActive ? 0 : -1}
           >
-            <span class="filter-check" aria-hidden="true" />
-            {filter.label}
+            <span>{filter.label}</span>
+            <span
+              class="filter-pill-count inline-flex min-w-[1.75em] justify-center rounded-full px-2 py-0.5 text-xs tracking-normal tabular-nums"
+              aria-hidden="true"
+            >
+              {count}
+            </span>
           </button>
-        ))
-      }
-    </div>
+        );
+      })
+    }
   </div>
-</nav>
+
+  <p
+    id="filter-empty-state"
+    role="status"
+    hidden
+    class="mt-10 text-sm text-muted"
+  >
+    No items match this filter — try another category.
+  </p>
+</section>
 
 <style>
-  .filter-btn {
+  .filter-pill {
     cursor: pointer;
-    background: none;
-    border: none;
-    padding: 0;
     touch-action: manipulation;
-    transition: font-weight 150ms ease, opacity 100ms ease;
+    color: var(--color-muted);
+    background: transparent;
+    border: 1px solid rgba(32, 45, 133, 0.18);
+    transition:
+      color 150ms ease,
+      background-color 150ms ease,
+      border-color 150ms ease,
+      opacity 100ms ease;
   }
 
-  .filter-btn[aria-pressed="true"] {
-    font-weight: 500;
+  .filter-pill:hover {
+    color: var(--color-text);
+    border-color: rgba(32, 45, 133, 0.4);
   }
 
-  .filter-btn:active {
-    opacity: 0.6;
+  .filter-pill:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  .filter-pill:active {
+    opacity: 0.7;
+  }
+
+  .filter-pill[aria-checked="true"] {
+    color: #fff;
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+  }
+
+  .filter-pill-count {
+    color: var(--color-faint);
+    background-color: rgba(32, 45, 133, 0.06);
+    transition:
+      color 150ms ease,
+      background-color 150ms ease;
+  }
+
+  .filter-pill:hover .filter-pill-count {
+    color: var(--color-muted);
+  }
+
+  .filter-pill[aria-checked="true"] .filter-pill-count {
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.18);
+  }
+
+  [data-category] {
+    transition:
+      opacity 200ms ease,
+      transform 200ms ease;
+  }
+
+  [data-category][hidden] {
+    display: none;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .filter-btn {
+    .filter-pill,
+    .filter-pill-count,
+    [data-category] {
       transition: none;
     }
-  }
-
-  .filter-check {
-    display: inline-block;
-    width: 1.5em;
-    text-align: left;
-  }
-
-  .filter-check::before {
-    content: "[]";
-  }
-
-  .filter-btn[aria-pressed="true"] .filter-check::before {
-    content: "[x]";
   }
 </style>
 
 <script>
   function initFilters() {
-    const buttons = document.querySelectorAll<HTMLButtonElement>(".filter-btn");
-    const cards = document.querySelectorAll<HTMLElement>("[data-category]");
+    const buttons = Array.from(
+      document.querySelectorAll<HTMLButtonElement>(".filter-pill"),
+    );
+    const cards = Array.from(
+      document.querySelectorAll<HTMLElement>("[data-category]"),
+    );
+    const countEl = document.querySelector<HTMLElement>("[data-filter-count]");
+    const emptyEl = document.getElementById("filter-empty-state");
 
-    function getFilterFromURL(): string {
+    if (!buttons.length) return;
+
+    const getFilterFromURL = (): string => {
       const params = new URLSearchParams(window.location.search);
       return params.get("filter") || "all";
-    }
+    };
 
-    function setFilterInURL(filter: string) {
+    const setFilterInURL = (filter: string) => {
       const url = new URL(window.location.href);
       if (filter === "all") {
         url.searchParams.delete("filter");
@@ -92,36 +165,65 @@ const filters: FilterOption[] = [
         url.searchParams.set("filter", filter);
       }
       window.history.replaceState({}, "", url.toString());
-    }
+    };
 
-    function applyFilter(activeFilter: string) {
+    const applyFilter = (active: string, focusActive = false) => {
+      let visible = 0;
+
       buttons.forEach((btn) => {
-        btn.setAttribute(
-          "aria-pressed",
-          btn.dataset.filter === activeFilter ? "true" : "false",
-        );
+        const isActive = btn.dataset.filter === active;
+        btn.setAttribute("aria-checked", isActive ? "true" : "false");
+        btn.tabIndex = isActive ? 0 : -1;
+        if (focusActive && isActive) btn.focus();
       });
 
       cards.forEach((card) => {
-        const category = card.dataset.category;
-        const visible = activeFilter === "all" || category === activeFilter;
-        card.style.display = visible ? "" : "none";
+        const matches = active === "all" || card.dataset.category === active;
+        card.toggleAttribute("hidden", !matches);
+        if (matches) visible++;
       });
-    }
 
-    buttons.forEach((btn) => {
+      if (countEl) countEl.textContent = String(visible);
+      if (emptyEl) emptyEl.toggleAttribute("hidden", visible !== 0);
+    };
+
+    buttons.forEach((btn, i) => {
       btn.addEventListener("click", () => {
         const filter = btn.dataset.filter || "all";
         setFilterInURL(filter);
         applyFilter(filter);
       });
+
+      btn.addEventListener("keydown", (e) => {
+        let next: number | null = null;
+        switch (e.key) {
+          case "ArrowRight":
+          case "ArrowDown":
+            next = (i + 1) % buttons.length;
+            break;
+          case "ArrowLeft":
+          case "ArrowUp":
+            next = (i - 1 + buttons.length) % buttons.length;
+            break;
+          case "Home":
+            next = 0;
+            break;
+          case "End":
+            next = buttons.length - 1;
+            break;
+        }
+        if (next !== null) {
+          e.preventDefault();
+          const filter = buttons[next].dataset.filter || "all";
+          setFilterInURL(filter);
+          applyFilter(filter, true);
+        }
+      });
     });
 
-    // Init from URL
     applyFilter(getFilterFromURL());
   }
 
-  // Run on initial load and Astro view transitions
   initFilters();
   document.addEventListener("astro:after-swap", initFilters);
 </script>

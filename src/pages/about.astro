@@ -5,21 +5,25 @@ import { recommendations, paletteColor } from "../data/recommendations";
 
 <Layout title="About">
   <article class="px-4 pt-0 pb-16">
-    <div
-      class="border-t border-dotted border-primary/25 pt-8 md:pt-12"
-    >
+    <div class="border-t border-dotted border-primary/25 pt-8 md:pt-12">
       <div class="flex max-w-prose flex-col gap-6">
         <p class="text-sm leading-relaxed text-text">
           Frontend developer from Melbourne, Australia. I am a curious person
           who loves trying new things and am currently learning creative web
           technologies like p5.js and three.js.
         </p>
-        <p class="text-sm leading-relaxed text-text">
-          Most of the work here is an attempt to make digital spaces that are
-          a little more playful.
+        <p class="text-sm leading-relaxed text-text max-w-prose">
+          I enjoy photography, spending time in movie theaters and am a
+          volunteer at the <a
+            class="underline decoration-text/20 underline-offset-[3px] transition-[text-decoration-color] duration-150 ease hover:decoration-text active:opacity-70 motion-reduce:transition-none"
+            href="https://altonanorthdojo.com/"
+            rel="noopener">Altona North Coder Dojo</a
+          >. If my work resonates with you, please reach out.
         </p>
       </div>
-      <div class="grid grid-cols-1 gap-12 md:gap-16 md:grid-cols-2 mt-8 md:mt-12">
+      <div
+        class="grid grid-cols-1 gap-12 md:gap-16 md:grid-cols-2 mt-8 md:mt-12"
+      >
         <div>
           <figure class="profile-wrap w-full overflow-hidden">
             <img
@@ -28,58 +32,50 @@ import { recommendations, paletteColor } from "../data/recommendations";
               width="600"
               height="600"
               loading="lazy"
-              class="profile-img aspect-square w-full object-cover border-primary border-3"
+              class="profile-img aspect-square w-full object-cover"
             />
             <figcaption class="py-2 text-xs text-faint">
               Taken in Tokyo, Japan
             </figcaption>
           </figure>
-          <p class="mt-6 text-sm leading-relaxed text-text max-w-prose">
-            I enjoy photography, spending time in movie theaters and am a
-            volunteer at the <a
-              class="underline decoration-text/20 underline-offset-[3px] transition-[text-decoration-color] duration-150 ease hover:decoration-text active:opacity-70 motion-reduce:transition-none"
-              href="https://altonanorthdojo.com/"
-              rel="noopener">Altona North Coder Dojo</a
-            >. If my work resonates with you, please reach out.
-          </p>
         </div>
         <div>
-        <h2
-          class="mb-4 text-sm font-medium uppercase tracking-widest text-text text-pretty"
-        >
-          Recommending:
-        </h2>
-        {
-          recommendations.length === 0 ? (
-            <p class="text-sm">Nothing here yet.</p>
-          ) : (
-            <ul role="list" class="flex list-none flex-col p-0">
-              {recommendations.map((rec, i) => (
-                <li>
-                  <a
-                    href={rec.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="group flex gap-4 no-underline text-inherit focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-text motion-reduce:transition-none border-y border-primary/8 hover:border-text active:opacity-60 transition-[border-color] duration-200 ease -mb-px"
-                  >
-                    <div class="flex flex-col gap-1 w-full py-3">
-                      <div class="flex items-center justify-between w-full">
-                        <h3 class="text-sm font-medium leading-tight text-pretty">
-                          {rec.title}
-                        </h3>
-                        <span class="text-[10px] text-faint uppercase tracking-widest font-medium">
-                          {rec.category}
-                        </span>
+          <h2
+            class="mb-4 text-sm font-medium uppercase tracking-widest text-text text-pretty"
+          >
+            Currently recommending:
+          </h2>
+          {
+            recommendations.length === 0 ? (
+              <p class="text-sm">Nothing here yet.</p>
+            ) : (
+              <ul role="list" class="flex list-none flex-col p-0">
+                {recommendations.map((rec, i) => (
+                  <li>
+                    <a
+                      href={rec.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="group flex gap-4 no-underline text-inherit focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-text motion-reduce:transition-none border-y border-primary/8 hover:border-text active:opacity-60 transition-[border-color] duration-200 ease -mb-px"
+                    >
+                      <div class="flex flex-col gap-1 w-full py-3">
+                        <div class="flex items-center justify-between w-full">
+                          <h3 class="text-sm font-medium leading-tight text-pretty">
+                            {rec.title}
+                          </h3>
+                          <span class="text-[12px] text-faint uppercase tracking-widest font-medium">
+                            {rec.category}
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          )
-        }
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )
+          }
+        </div>
       </div>
-    </div>
     </div>
   </article>
 </Layout>
