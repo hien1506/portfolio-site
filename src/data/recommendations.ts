@@ -49,4 +49,10 @@ export const recommendations: Recommendation[] = [
     category: "Interactive",
     link: "https://learningsynths.ableton.com",
   },
+  {
+    title: "Aspect Ratios with Sinners Director Ryan Coogler",
+    description: "Aspect Ratios with Sinners Director Ryan Coogler.",
+    category: "Video",
+    link: "https://www.youtube.com/watch?v=78Ru62uFM0s",
+  },
 ];
